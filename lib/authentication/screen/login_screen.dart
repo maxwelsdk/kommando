@@ -34,7 +34,12 @@ class LoginScreen extends StatelessWidget {
               Card(
                 child: Container(
                   height: MediaQuery.of(context).size.height * 0.6,
-                  color: Colors.white,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
+                    ),
+                  ),
                   child: Form(
                     key: _key,
                     child: Padding(
@@ -108,9 +113,12 @@ class LoginScreen extends StatelessWidget {
               Observer(
                 builder: (BuildContext context) {
                   var state = store.state;
+                  print(state);
                   if (state is LoginLoadingState) {
                     return Center(
-                      child: CircularProgressIndicator(),
+                      child: CircularProgressIndicator(
+                        backgroundColor: Colors.black,
+                      ),
                     );
                   }
                   if (state is LoginErrorState) {

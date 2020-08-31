@@ -20,18 +20,16 @@ abstract class _LoginStore with Store {
     setState(LoginLoadingState());
     _service
         .createUserWithEmailAndPassword(email, password)
-        .catchError((onError) {
-      setState(LoginErrorState(onError));
-    });
-    setState(LoginDoneState());
+        .then((value) => setState(LoginDoneState(value)))
+        .catchError((onError) => setState(LoginErrorState(onError)));
   }
 
   void loginWithEmailAndPassword({String email, String password}) {
     setState(LoginLoadingState());
-    _service.loginWithEmailAndPassword(email, password).catchError((onError) {
-      setState(LoginErrorState(onError));
-    });
-    setState(LoginDoneState());
+    _service
+        .loginWithEmailAndPassword(email, password)
+        .then((value) => setState(LoginDoneState(value)))
+        .catchError((onError) => setState(LoginErrorState(onError)));
   }
 
   void signOut() {

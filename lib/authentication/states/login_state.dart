@@ -12,4 +12,8 @@ class LoginErrorState implements LoginState {
   LoginErrorState(this.firebaseAuthException);
 }
 
-class LoginDoneState implements LoginState {}
+class LoginDoneState implements LoginState {
+  final UserCredential user;
+
+  LoginDoneState(this.user);
+}
