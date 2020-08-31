@@ -14,4 +14,9 @@ class AuthenticationServices implements IFirebaseAuth {
   Future<UserCredential> loginWithEmailAndPassword(String email, String password) {
     return firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
   }
+
+  @override
+  Future<UserCredential> signOut() async {
+    await firebaseAuth.signOut();
+  }
 }

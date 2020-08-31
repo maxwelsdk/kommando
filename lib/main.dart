@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
               return Container(
                 color: Colors.red,
                 child: Center(
-                  child: Text("Falha ao conectar no FirebaseAppko"),
+                  child: Text("Falha ao conectar no FirebaseApp"),
                 ),
               );
             }
@@ -56,8 +56,11 @@ class MyApp extends StatelessWidget {
                 },
               );
             }
-            return Center(
-              child: CircularProgressIndicator(),
+            return Container(
+              color: Theme.of(context).primaryColor,
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
             );
           }),
     );

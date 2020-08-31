@@ -33,4 +33,9 @@ abstract class _LoginStore with Store {
     });
     setState(LoginDoneState());
   }
+
+  void signOut() {
+    _service.signOut();
+    setState(LoginIdleState());
+  }
 }
