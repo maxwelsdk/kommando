@@ -16,7 +16,7 @@ class AuthenticationServices implements IFirebaseAuth {
   }
 
   @override
-  Future<UserCredential> signOut() async {
+  Future<void> signOut() async {
     await firebaseAuth.signOut();
   }
 }
