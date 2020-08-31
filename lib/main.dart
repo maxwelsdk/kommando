@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:kommando/login/screen/login_screen.dart';
@@ -30,7 +31,19 @@ class MyApp extends StatelessWidget {
               );
             }
             if (snapshot.connectionState == ConnectionState.done) {
-              return LoginScreen();
+              return StreamBuilder(
+                stream: FirebaseAuth.instance.authStateChanges(),
+                builder: (context, snapshot) {
+                  return LoginScreen();
+                  if (snapshot.data == null) {
+                    return LoginScreen();
+                  } else {
+                    return Container(
+                      color: Colors.amber,
+                    );
+                  }
+                },
+              );
             }
             return Center(
               child: CircularProgressIndicator(),
