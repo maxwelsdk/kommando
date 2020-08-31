@@ -78,6 +78,7 @@ class LoginScreen extends StatelessWidget {
                             text: "Entrar",
                             onPressed: () {
                               if (_key.currentState.validate()) {
+                                FocusScope.of(context).unfocus();
                                 store.loginWithEmailAndPassword(
                                     email: _emailAddressController.text,
                                     password: _passwordController.text);
