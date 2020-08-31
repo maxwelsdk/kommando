@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kommando/authentication/screen/widgets/custom_button.dart';
 import 'package:kommando/authentication/states/login_state.dart';
 import 'package:kommando/authentication/stores/login_store.dart';
+import 'package:kommando/signup/screen/signup_screen.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -88,7 +89,14 @@ class LoginScreen extends StatelessWidget {
                           Container(
                             child: FlatButton(
                               child: Text("Registrar-se"),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => SignUpScreen(),
+                                  ),
+                                );
+                              },
                             ),
                           )
                         ],
