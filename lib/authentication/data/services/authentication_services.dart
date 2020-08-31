@@ -5,13 +5,13 @@ class AuthenticationServices implements IFirebaseAuth {
   final firebaseAuth = FirebaseAuth.instance;
 
   @override
-  createUserWithEmailAndPassword(String email, String password) {
-    firebaseAuth.createUserWithEmailAndPassword(
+  Future<UserCredential> createUserWithEmailAndPassword(String email, String password) {
+    return firebaseAuth.createUserWithEmailAndPassword(
         email: email, password: password);
   }
 
   @override
-  loginWithEmailAndPassword(String email, String password) {
-    firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+  Future<UserCredential> loginWithEmailAndPassword(String email, String password) {
+    return firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
   }
 }
