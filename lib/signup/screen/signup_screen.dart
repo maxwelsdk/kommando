@@ -64,6 +64,8 @@ class SignUpScreen extends StatelessWidget {
                   text: "salvar",
                   onPressed: () {
                     FocusScope.of(context).unfocus();
+                    _formPersonKey.currentState.validate();
+                    _formUserKey.currentState.validate();
                     if (_formPersonKey.currentState.validate() &&
                         _formUserKey.currentState.validate()) {
                       _personalData.nome = nomeController.text;
