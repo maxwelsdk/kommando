@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kommando/authentication/stores/login_store.dart';
 import 'package:provider/provider.dart';
@@ -20,7 +21,7 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       body: Container(
-        child: Text("Build here"),
+        child: Text("Build here ${FirebaseAuth.instance.currentUser}"),
       ),
     );
   }

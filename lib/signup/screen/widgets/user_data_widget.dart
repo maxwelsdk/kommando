@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:kommando/signup/stores/signup_store.dart';
+import 'package:provider/provider.dart';
 
 class UserDataForm extends StatelessWidget {
-  final _emailController = TextEditingController();
-  final _senhaController = TextEditingController();
-  final _repetirSenhaController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
-  final scaffoldKey;
 
-  UserDataForm({Key key, this.scaffoldKey}) : super(key: key);
+  final emailController;
+
+  final senhaController;
+
+  final repetirSenhaController;
+
+  final GlobalKey<FormState> formUserKey;
+
+  UserDataForm({Key key, this.formUserKey, this.emailController, this.senhaController, this.repetirSenhaController}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final store = Provider.of<SignupStore>(context);
     return Container(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -25,7 +31,7 @@ class UserDataForm extends StatelessWidget {
               ),
             ),
             Form(
-              key: _formKey,
+              key: formUserKey,
               child: Column(
                 children: [
                   TextFormField(
@@ -36,7 +42,7 @@ class UserDataForm extends StatelessWidget {
                       return null;
                     },
                     keyboardType: TextInputType.emailAddress,
-                    controller: _emailController,
+                    controller: emailController,
                     decoration: InputDecoration(labelText: "E-mail"),
                   ),
                   SizedBox(
@@ -44,13 +50,15 @@ class UserDataForm extends StatelessWidget {
                   ),
                   TextFormField(
                     validator: (value) {
+                      if (value != repetirSenhaController.text) return "Senha incompativel";
                       if (value.isEmpty) {
                         return "Este campo não pode ser vazio";
                       }
                       return null;
                     },
                     keyboardType: TextInputType.visiblePassword,
-                    controller: _senhaController,
+                    controller: senhaController,
+                    obscureText: true,
                     decoration: InputDecoration(labelText: "Senha"),
                   ),
                   SizedBox(
@@ -58,13 +66,15 @@ class UserDataForm extends StatelessWidget {
                   ),
                   TextFormField(
                     validator: (value) {
+                      if (value != senhaController.text) return "Senha incompativel";
                       if (value.isEmpty) {
                         return "Este campo não pode ser vazio";
                       }
                       return null;
                     },
                     keyboardType: TextInputType.visiblePassword,
-                    controller: _repetirSenhaController,
+                    controller: repetirSenhaController,
+                    obscureText: true,
                     decoration: InputDecoration(labelText: "Repetir senha"),
                   ),
                 ],

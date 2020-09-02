@@ -1,16 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:kommando/signup/stores/signup_store.dart';
+import 'package:provider/provider.dart';
 
 class PersonalDataForm extends StatelessWidget {
-  final _nomeController = TextEditingController();
-  final _docController = TextEditingController();
-  final _phoneController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
-  final scaffoldKey;
+  final nomeController;
 
-  PersonalDataForm({Key key, this.scaffoldKey}) : super(key: key);
+  final docController;
+
+  final phoneController;
+
+  final GlobalKey<FormState> formPersonKey;
+
+  PersonalDataForm(
+      {Key key,
+      this.formPersonKey,
+      this.nomeController,
+      this.docController,
+      this.phoneController})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final store = Provider.of<SignupStore>(context);
     return Container(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -25,7 +36,7 @@ class PersonalDataForm extends StatelessWidget {
               ),
             ),
             Form(
-              key: _formKey,
+              key: formPersonKey,
               child: Column(
                 children: [
                   TextFormField(
@@ -36,7 +47,7 @@ class PersonalDataForm extends StatelessWidget {
                       return null;
                     },
                     keyboardType: TextInputType.emailAddress,
-                    controller: _nomeController,
+                    controller: nomeController,
                     decoration: InputDecoration(labelText: "Nome completo"),
                   ),
                   SizedBox(
@@ -50,7 +61,7 @@ class PersonalDataForm extends StatelessWidget {
                       return null;
                     },
                     keyboardType: TextInputType.number,
-                    controller: _docController,
+                    controller: docController,
                     decoration: InputDecoration(labelText: "CPF"),
                   ),
                   SizedBox(
@@ -64,7 +75,7 @@ class PersonalDataForm extends StatelessWidget {
                       return null;
                     },
                     keyboardType: TextInputType.phone,
-                    controller: _phoneController,
+                    controller: phoneController,
                     decoration: InputDecoration(labelText: "Telefone"),
                   ),
                 ],

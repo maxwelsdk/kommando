@@ -28,112 +28,111 @@ class LoginScreen extends StatelessWidget {
               stops: [0, 1],
             ),
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Card(
-                child: Container(
-                  height: MediaQuery.of(context).size.height * 0.6,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Card(
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.45,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(15),
+                      ),
                     ),
-                  ),
-                  child: Form(
-                    key: _key,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          Center(
-                            child: CircleAvatar(
-                              backgroundColor: Theme.of(context).primaryColor,
-                              radius: 60,
-                            ),
-                          ),
-                          TextFormField(
-                            controller: _emailAddressController,
-                            keyboardType: TextInputType.emailAddress,
-                            decoration: InputDecoration(
-                              labelText: "E-maill",
-                            ),
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return "Este campo não pode ficar vazio";
-                              }
-                              return null;
-                            },
-                          ),
-                          TextFormField(
-                            controller: _passwordController,
-                            keyboardType: TextInputType.visiblePassword,
-                            obscureText: true,
-                            decoration: InputDecoration(
-                              labelText: "Senha",
-                            ),
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return "Este campo não pode ficar vazio";
-                              }
-                              return null;
-                            },
-                          ),
-                          CustomButton(
-                            text: "Entrar",
-                            onPressed: () {
-                              if (_key.currentState.validate()) {
-                                FocusScope.of(context).unfocus();
-                                store.loginWithEmailAndPassword(
-                                    email: _emailAddressController.text,
-                                    password: _passwordController.text);
-                              }
-                            },
-                          ),
-                          Container(
-                            child: FlatButton(
-                              child: Text("Registrar-se"),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => SignUpScreen(),
-                                  ),
-                                );
+                    child: Form(
+                      key: _key,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: <Widget>[
+                            TextFormField(
+                              controller: _emailAddressController,
+                              keyboardType: TextInputType.emailAddress,
+                              decoration: InputDecoration(
+                                labelText: "E-maill",
+                              ),
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return "Este campo não pode ficar vazio";
+                                }
+                                return null;
                               },
                             ),
-                          )
-                        ],
+                            TextFormField(
+                              controller: _passwordController,
+                              keyboardType: TextInputType.visiblePassword,
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                labelText: "Senha",
+                              ),
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return "Este campo não pode ficar vazio";
+                                }
+                                return null;
+                              },
+                            ),
+                            CustomButton(
+                              text: "entrar",
+                              onPressed: () {
+                                if (_key.currentState.validate()) {
+                                  FocusScope.of(context).unfocus();
+                                  store.loginWithEmailAndPassword(
+                                      email: _emailAddressController.text,
+                                      password: _passwordController.text);
+                                }
+                              },
+                            ),
+                            Container(
+                              child: FlatButton(
+                                child: Text("registrar-se"),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => SignUpScreen(),
+                                    ),
+                                  );
+                                },
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              Observer(
-                builder: (BuildContext context) {
-                  var state = store.state;
-                  print(state);
-                  if (state is LoginLoadingState) {
-                    return Center(
-                      child: CircularProgressIndicator(
-                        backgroundColor: Colors.black,
-                      ),
-                    );
-                  }
-                  if (state is LoginErrorState) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                          child: Text(
-                        "${state.firebaseAuthException.message}",
-                      )),
-                    );
-                  }
-                  return Container();
-                },
-              )
-            ],
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Observer(
+                    builder: (BuildContext context) {
+                      var state = store.state;
+                      if (state is LoginLoadingState) {
+                        return Center(
+                          child: CircularProgressIndicator(
+                            backgroundColor: Colors.black,
+                          ),
+                        );
+                      }
+                      if (state is LoginErrorState) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                              child: Text(
+                            "${state.firebaseAuthException.message}",
+                          )),
+                        );
+                      }
+                      return Container();
+                    },
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

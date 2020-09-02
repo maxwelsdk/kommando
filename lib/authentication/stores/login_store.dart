@@ -16,20 +16,15 @@ abstract class _LoginStore with Store {
   @action
   setState(LoginState value) => this.state = value;
 
-  void createUser({String email, String password}) {
-    setState(LoginLoadingState());
-    _service
-        .createUserWithEmailAndPassword(email, password)
-        .then((value) => setState(LoginDoneState(value)))
-        .catchError((onError) => setState(LoginErrorState(onError)));
-  }
-
   void loginWithEmailAndPassword({String email, String password}) {
     setState(LoginLoadingState());
     _service
         .loginWithEmailAndPassword(email, password)
         .then((value) => setState(LoginDoneState(value)))
-        .catchError((onError) => setState(LoginErrorState(onError)));
+        .catchError((onError) => setState(LoginErrorState(onError)))
+        .timeout(Duration(seconds: 120), onTimeout: () {
+      setState(LoginIdleState());
+    });
   }
 
   void signOut() {

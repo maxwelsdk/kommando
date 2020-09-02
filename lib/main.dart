@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:kommando/authentication/screen/login_screen.dart';
 import 'package:kommando/authentication/stores/login_store.dart';
 import 'package:kommando/home/screen/home_screen.dart';
+import 'package:kommando/signup/stores/signup_store.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -13,6 +14,9 @@ void main() {
       providers: [
         Provider(
           create: (context) => LoginStore(),
+        ),
+        Provider(
+          create: (context) => SignupStore(),
         )
       ],
       child: MyApp(),
