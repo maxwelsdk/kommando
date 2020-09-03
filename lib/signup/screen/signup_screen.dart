@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kommando/authentication/data/models/personal_data.dart';
-import 'package:kommando/authentication/screen/widgets/custom_button.dart';
 import 'package:kommando/signup/screen/widgets/personal_data_widget.dart';
 import 'package:kommando/signup/screen/widgets/user_data_widget.dart';
 import 'package:kommando/signup/states/signup_states.dart';
@@ -35,6 +34,24 @@ class SignUpScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text("Cadastro"),
       ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.save),
+        onPressed: () {
+          FocusScope.of(context).unfocus();
+          _formPersonKey.currentState.validate();
+          _formUserKey.currentState.validate();
+          if (_formPersonKey.currentState.validate() &&
+              _formUserKey.currentState.validate()) {
+            _personalData.nome = nomeController.text;
+            _personalData.cpf = docController.text;
+            _personalData.telefone = phoneController.text;
+            store.createUser(
+                email: emailController.text,
+                password: senhaController.text);
+            store.savePersonalData(personalData: _personalData);
+          }
+        },
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -60,23 +77,7 @@ class SignUpScreen extends StatelessWidget {
                     color: Colors.green,
                   );
                 }
-                return CustomButton(
-                  text: "salvar",
-                  onPressed: () {
-                    FocusScope.of(context).unfocus();
-                    _formPersonKey.currentState.validate();
-                    _formUserKey.currentState.validate();
-                    if (_formPersonKey.currentState.validate() &&
-                        _formUserKey.currentState.validate()) {
-                      _personalData.nome = nomeController.text;
-                      _personalData.cpf = docController.text;
-                      _personalData.telefone = phoneController.text;
-                      store.createUser(
-                          email: emailController.text,
-                          password: senhaController.text);
-                    }
-                  },
-                );
+                return Container();
               },
             ),
             Observer(

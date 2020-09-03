@@ -13,12 +13,13 @@ class PersonalData {
      this.uid = map['uid'];
   }
 
-  PersonalData.toMap() {
+  Map<String, dynamic> toMap() {
      final map = Map<String, dynamic>();
      map['nome'] = this.nome;
      map['cpf'] = this.cpf;
      map['telefone'] = this.telefone;
      map['uid'] = this.uid;
+     return map;
   }
 
   @override
