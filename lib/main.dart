@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:kommando/authentication/screen/login_screen.dart';
-import 'package:kommando/authentication/stores/login_store.dart';
-import 'package:kommando/home/screen/home_screen.dart';
-import 'package:kommando/signup/stores/signup_store.dart';
+import 'package:kommando/features/home/ui/screen/home_screen.dart';
+import 'package:kommando/features/login/ui/screen/login_screen.dart';
+import 'package:kommando/features/login/ui/stores/login_store.dart';
+import 'package:kommando/features/signup/ui/stores/signup_store.dart';
 import 'package:provider/provider.dart';
 
 void main() {
