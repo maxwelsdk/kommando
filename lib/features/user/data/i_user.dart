@@ -1,6 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:kommando/features/authentication/data/models/personal_data.dart';
 
 abstract class IUser {
-  CollectionReference users();
-  Future<QuerySnapshot> currentUserPersonalData({String uid});
+  Future pushUser({User user});
+  Future fetchUsers();
+  Future fetchUser({String id});
 }

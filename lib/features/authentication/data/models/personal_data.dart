@@ -1,29 +1,36 @@
-class PersonalData {
+class User {
+  String id;
+  String uid;
   String nome;
+  String displayName;
   String cpf;
   String telefone;
-  String uid;
 
-  PersonalData({this.nome, this.cpf, this.telefone, this.uid});
+  User(
+      {this.id,
+        this.uid,
+        this.nome,
+        this.displayName,
+        this.cpf,
+        this.telefone});
 
-   PersonalData.fromMap(Map<String, dynamic> map) {
-     this.nome = map['nome'];
-     this.cpf = map['cpf'];
-     this.telefone = map['telefone'];
-     this.uid = map['uid'];
+  User.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    uid = json['uid'];
+    nome = json['nome'];
+    displayName = json['displayName'];
+    cpf = json['cpf'];
+    telefone = json['telefone'];
   }
 
-  Map<String, dynamic> toMap() {
-     final map = Map<String, dynamic>();
-     map['nome'] = this.nome;
-     map['cpf'] = this.cpf;
-     map['telefone'] = this.telefone;
-     map['uid'] = this.uid;
-     return map;
-  }
-
-  @override
-  String toString() {
-    return 'PersonalData{nome: $nome, cpf: $cpf, telefone: $telefone, uid: $uid}';
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['uid'] = this.uid;
+    data['nome'] = this.nome;
+    data['displayName'] = this.displayName;
+    data['cpf'] = this.cpf;
+    data['telefone'] = this.telefone;
+    return data;
   }
 }

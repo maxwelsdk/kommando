@@ -1,31 +1,31 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter_test/flutter_test.dart';
+import 'package:kommando/core/api/api.dart';
+import 'package:kommando/features/authentication/data/models/personal_data.dart';
+import 'package:kommando/features/user/data/services/user_services.dart';
 
-void main() async {
-  TestWidgetsFlutterBinding.ensureInitialized();
+void main() {
+  Api.url = "http://localhost:8080";
+  final UserServices userServices = UserServices();
 
-/*  await Firebase.initializeApp(
-    name: "Kommando",
-    options: FirebaseOptions(
-        projectId: "flutterapp-cff50",
-        apiKey: "AIzaSyAQ-Zfp5MY-tKXijwG5S4gQECMz89jki-s",
-        appId: "1:341570973345:android:3279eef39a6e938c830ae0",
-        messagingSenderId: "341570973345"),
-  ).catchError((onError) => print(onError));*/
+  test("List users", () async {
+    await userServices.fetchUsers().then((value) {
+      for(User i in value) {
+        print(i.toJson());
+      }
+    });
+  });
 
-  test("auth instance", () async {
-    // await Firebase.initializeApp();
-    await Firebase.initializeApp(
-      name: "Kommando",
-      options: FirebaseOptions(
-          projectId: "flutterapp-cff50",
-          apiKey: "AIzaSyAQ-Zfp5MY-tKXijwG5S4gQECMz89jki-s",
-          appId: "1:341570973345:android:3279eef39a6e938c830ae0",
-          messagingSenderId: "341570973345"),
-    ).catchError((onError) => print(onError));
-    FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-    print(firebaseAuth.currentUser.displayName);
-    // print(firebaseAuth);
+  test("Registro de usuário autenticado", () async {
+
+    await userServices
+        .pushUser(
+            user: User(
+                displayName: "teste",
+                uid: "fakeuid",
+                cpf: "95",
+                nome: "teste",
+                telefone: "21321321"))
+        .then((value) => print(value));
   });
 }

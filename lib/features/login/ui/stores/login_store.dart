@@ -1,8 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:kommando/features/authentication/data/i_firebase_auth.dart';
 import 'package:kommando/features/authentication/data/services/authentication_services.dart';
-import 'package:kommando/features/user/data/i_user.dart';
-import 'package:kommando/features/user/data/services/user_services.dart';
 import 'package:kommando/features/login/ui/states/login_state.dart';
 import 'package:mobx/mobx.dart';
 
@@ -12,7 +9,6 @@ class LoginStore = _LoginStore with _$LoginStore;
 
 abstract class _LoginStore with Store {
   IFirebaseAuth _service = AuthenticationServices();
-  IUser _firestore = UserServices();
 
   @observable
   LoginState state = LoginIdleState();
@@ -29,10 +25,6 @@ abstract class _LoginStore with Store {
         .timeout(Duration(seconds: 120), onTimeout: () {
       setState(LoginIdleState());
     });
-  }
-
-  Future<QuerySnapshot> currentUserPersonalData({String uid}) async {
-    return await _firestore.currentUserPersonalData(uid: uid);
   }
 
   void signOut() {

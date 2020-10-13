@@ -26,7 +26,7 @@ class SignUpScreen extends StatelessWidget {
 
   final repetirSenhaController = TextEditingController();
 
-  final PersonalData _personalData = PersonalData();
+  final User _personalData = User();
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class SignUpScreen extends StatelessWidget {
             store.createUser(
               email: emailController.text,
               password: senhaController.text,
-              personalData: _personalData,
+              user: _personalData,
             );
           }
         },
@@ -75,26 +75,19 @@ class SignUpScreen extends StatelessWidget {
                 builder: (_) {
                   var state = store.state;
                   if (state is SignupSuccesState) {
-                    return Icon(
-                      Icons.check_circle,
-                      size: 60,
-                      color: Colors.green,
-                    );
-                  }
-                  return Container();
-                },
-              ),
-              Observer(
-                builder: (_) {
-                  var state = store.state;
-                  if (state is SignupSuccesState) {
                     _personalData.uid = state.userCredential.user.uid;
                     Future.delayed(Duration(seconds: 10), () {
                       store.setState(SignupIdleState());
                       Navigator.pop(context);
                     });
-                    return Text(
-                        "${_personalData.nome} vou te redirecionar para a tela de início.");
+                    return Column(
+                      children: [
+                        Text(
+                          "${_personalData.nome} seja bem vindo! Aguarde um instante...",
+                        ),
+                        Text("Já estou logando você no aplicativo")
+                      ],
+                    );
                   }
                   if (state is SignupLoadingState) {
                     return Center(
@@ -111,7 +104,7 @@ class SignUpScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
                           child: Text(
-                        "${state.firebaseAuthException.message}",
+                        "${state.message}",
                       )),
                     );
                   }
