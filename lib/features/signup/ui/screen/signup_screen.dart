@@ -47,8 +47,10 @@ class SignUpScreen extends StatelessWidget {
             _personalData.cpf = docController.text;
             _personalData.telefone = phoneController.text;
             store.createUser(
-                email: emailController.text, password: senhaController.text);
-            store.savePersonalData(personalData: _personalData);
+              email: emailController.text,
+              password: senhaController.text,
+              personalData: _personalData,
+            );
           }
         },
       ),
@@ -92,7 +94,7 @@ class SignUpScreen extends StatelessWidget {
                       Navigator.pop(context);
                     });
                     return Text(
-                        "${_personalData.nome} vou te redirecionar para features.home.");
+                        "${_personalData.nome} vou te redirecionar para a tela de início.");
                   }
                   if (state is SignupLoadingState) {
                     return Center(
