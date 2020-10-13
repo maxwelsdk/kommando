@@ -33,11 +33,10 @@ class SignUpScreen extends StatelessWidget {
     final store = Provider.of<SignupStore>(context);
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBar(
-        title: Text("Cadastro"),
-      ),
+      appBar: AppBar(),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.save),
+        backgroundColor: Theme.of(context).primaryColor,
         onPressed: () {
           FocusScope.of(context).unfocus();
           _formPersonKey.currentState.validate();
@@ -48,75 +47,77 @@ class SignUpScreen extends StatelessWidget {
             _personalData.cpf = docController.text;
             _personalData.telefone = phoneController.text;
             store.createUser(
-                email: emailController.text,
-                password: senhaController.text);
+                email: emailController.text, password: senhaController.text);
             store.savePersonalData(personalData: _personalData);
           }
         },
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            PersonalDataForm(
-              formPersonKey: _formPersonKey,
-              docController: docController,
-              nomeController: nomeController,
-              phoneController: phoneController,
-            ),
-            UserDataForm(
-              formUserKey: _formUserKey,
-              emailController: emailController,
-              senhaController: senhaController,
-              repetirSenhaController: repetirSenhaController,
-            ),
-            Observer(
-              builder: (_) {
-                var state = store.state;
-                if (state is SignupSuccesState) {
-                  return Icon(
-                    Icons.check_circle,
-                    size: 60,
-                    color: Colors.green,
-                  );
-                }
-                return Container();
-              },
-            ),
-            Observer(
-              builder: (_) {
-                var state = store.state;
-                if (state is SignupSuccesState) {
-                  _personalData.uid = state.userCredential.user.uid;
-                  Future.delayed(Duration(seconds: 10), () {
-                    store.setState(SignupIdleState());
-                    Navigator.pop(context);
-                  });
-                  return Text(
-                      "${_personalData.nome} vou te redirecionar para features.home.");
-                }
-                if (state is SignupLoadingState) {
-                  return Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CircularProgressIndicator(
-                        backgroundColor: Colors.black,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          child: Column(
+            children: [
+              PersonalDataForm(
+                formPersonKey: _formPersonKey,
+                docController: docController,
+                nomeController: nomeController,
+                phoneController: phoneController,
+              ),
+              UserDataForm(
+                formUserKey: _formUserKey,
+                emailController: emailController,
+                senhaController: senhaController,
+                repetirSenhaController: repetirSenhaController,
+              ),
+              Observer(
+                builder: (_) {
+                  var state = store.state;
+                  if (state is SignupSuccesState) {
+                    return Icon(
+                      Icons.check_circle,
+                      size: 60,
+                      color: Colors.green,
+                    );
+                  }
+                  return Container();
+                },
+              ),
+              Observer(
+                builder: (_) {
+                  var state = store.state;
+                  if (state is SignupSuccesState) {
+                    _personalData.uid = state.userCredential.user.uid;
+                    Future.delayed(Duration(seconds: 10), () {
+                      store.setState(SignupIdleState());
+                      Navigator.pop(context);
+                    });
+                    return Text(
+                        "${_personalData.nome} vou te redirecionar para features.home.");
+                  }
+                  if (state is SignupLoadingState) {
+                    return Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CircularProgressIndicator(
+                          backgroundColor: Colors.black,
+                        ),
                       ),
-                    ),
-                  );
-                }
-                if (state is SignupErrorState) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                        child: Text(
-                      "${state.firebaseAuthException.message}",
-                    )),
-                  );
-                }
-                return Container();
-              },
-            ),
-          ],
+                    );
+                  }
+                  if (state is SignupErrorState) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                          child: Text(
+                        "${state.firebaseAuthException.message}",
+                      )),
+                    );
+                  }
+                  return Container();
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

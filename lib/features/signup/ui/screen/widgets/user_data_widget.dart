@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class UserDataForm extends StatelessWidget {
-
   final emailController;
 
   final senhaController;
@@ -10,10 +9,20 @@ class UserDataForm extends StatelessWidget {
 
   final GlobalKey<FormState> formUserKey;
 
-  UserDataForm({Key key, this.formUserKey, this.emailController, this.senhaController, this.repetirSenhaController}) : super(key: key);
+  final List<FocusNode> nodes = List();
+
+  UserDataForm(
+      {Key key,
+      this.formUserKey,
+      this.emailController,
+      this.senhaController,
+      this.repetirSenhaController})
+      : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
+    List.generate(3, (index) => nodes.add(FocusNode()));
 
     return Container(
       child: Padding(
@@ -23,7 +32,7 @@ class UserDataForm extends StatelessWidget {
             Container(
               child: Column(
                 children: [
-                  Text("Usuário"),
+                  Text("usuário"),
                   Divider(),
                 ],
               ),
@@ -41,14 +50,18 @@ class UserDataForm extends StatelessWidget {
                     },
                     keyboardType: TextInputType.emailAddress,
                     controller: emailController,
-                    decoration: InputDecoration(labelText: "E-mail"),
+                    focusNode: nodes[0],
+                    onFieldSubmitted: (value) =>
+                        FocusScope.of(context).requestFocus(nodes[1]),
+                    decoration: InputDecoration(labelText: "e-mail"),
                   ),
                   SizedBox(
                     height: 8,
                   ),
                   TextFormField(
                     validator: (value) {
-                      if (value != repetirSenhaController.text) return "Senha incompativel";
+                      if (value != repetirSenhaController.text)
+                        return "Senha incompativel";
                       if (value.isEmpty) {
                         return "Este campo não pode ser vazio";
                       }
@@ -57,14 +70,18 @@ class UserDataForm extends StatelessWidget {
                     keyboardType: TextInputType.visiblePassword,
                     controller: senhaController,
                     obscureText: true,
-                    decoration: InputDecoration(labelText: "Senha"),
+                    focusNode: nodes[1],
+                    onFieldSubmitted: (value) =>
+                        FocusScope.of(context).requestFocus(nodes[2]),
+                    decoration: InputDecoration(labelText: "senha"),
                   ),
                   SizedBox(
                     height: 8,
                   ),
                   TextFormField(
                     validator: (value) {
-                      if (value != senhaController.text) return "Senha incompativel";
+                      if (value != senhaController.text)
+                        return "Senha incompativel";
                       if (value.isEmpty) {
                         return "Este campo não pode ser vazio";
                       }
@@ -73,7 +90,8 @@ class UserDataForm extends StatelessWidget {
                     keyboardType: TextInputType.visiblePassword,
                     controller: repetirSenhaController,
                     obscureText: true,
-                    decoration: InputDecoration(labelText: "Repetir senha"),
+                    focusNode: nodes[2],
+                    decoration: InputDecoration(labelText: "repetir senha"),
                   ),
                 ],
               ),

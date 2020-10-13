@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kommando/core/ui/linear_background_widget.dart';
@@ -53,7 +51,8 @@ class LoginScreen extends StatelessWidget {
                             children: <Widget>[
                               ProjetoKommandoLogoWidget(),
                               Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 24.0),
                                 child: TextFormField(
                                   controller: _emailAddressController,
                                   keyboardType: TextInputType.emailAddress,
@@ -69,7 +68,8 @@ class LoginScreen extends StatelessWidget {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 24.0),
                                 child: TextFormField(
                                   controller: _passwordController,
                                   keyboardType: TextInputType.visiblePassword,

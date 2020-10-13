@@ -9,6 +9,8 @@ class PersonalDataForm extends StatelessWidget {
 
   final GlobalKey<FormState> formPersonKey;
 
+  final List<FocusNode> nodes = List();
+
   PersonalDataForm(
       {Key key,
       this.formPersonKey,
@@ -19,6 +21,7 @@ class PersonalDataForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List.generate(3, (index) => nodes.add(FocusNode()));
 
     return Container(
       child: Padding(
@@ -28,7 +31,7 @@ class PersonalDataForm extends StatelessWidget {
             Container(
               child: Column(
                 children: [
-                  Text("Dados pessoais"),
+                  Text("dados pessoais"),
                   Divider(),
                 ],
               ),
@@ -46,7 +49,10 @@ class PersonalDataForm extends StatelessWidget {
                     },
                     keyboardType: TextInputType.emailAddress,
                     controller: nomeController,
-                    decoration: InputDecoration(labelText: "Nome completo"),
+                    focusNode: nodes[0],
+                    onFieldSubmitted: (value) =>
+                        FocusScope.of(context).requestFocus(nodes[1]),
+                    decoration: InputDecoration(labelText: "nome completo"),
                   ),
                   SizedBox(
                     height: 8,
@@ -60,7 +66,10 @@ class PersonalDataForm extends StatelessWidget {
                     },
                     keyboardType: TextInputType.number,
                     controller: docController,
-                    decoration: InputDecoration(labelText: "CPF"),
+                    focusNode: nodes[1],
+                    onFieldSubmitted: (value) =>
+                        FocusScope.of(context).requestFocus(nodes[2]),
+                    decoration: InputDecoration(labelText: "cpf"),
                   ),
                   SizedBox(
                     height: 8,
@@ -74,7 +83,8 @@ class PersonalDataForm extends StatelessWidget {
                     },
                     keyboardType: TextInputType.phone,
                     controller: phoneController,
-                    decoration: InputDecoration(labelText: "Telefone"),
+                    focusNode: nodes[2],
+                    decoration: InputDecoration(labelText: "telefone"),
                   ),
                 ],
               ),

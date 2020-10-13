@@ -74,6 +74,10 @@ class MyApp extends StatelessWidget {
       accentColor: _accentColor,
       visualDensity: VisualDensity.adaptivePlatformDensity,
       inputDecorationTheme: InputDecorationTheme(
+        labelStyle: TextStyle(
+          color: _primaryColor,
+          fontWeight: FontWeight.bold
+        ),
         disabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: _primaryColor,
