@@ -5,7 +5,9 @@ import 'package:http/http.dart' as http;
 import 'package:kommando/core/api/api.dart';
 
 class ApiServices {
-  Map<String, String> defaultHeaders = {};
+  Map<String, String> defaultHeaders = {
+    HttpHeaders.contentTypeHeader: "application/json"
+  };
 
   Future<http.Response> post({String uri, dynamic body}) async {
     final http.Response _response = await http.post("${Api.url}$uri",

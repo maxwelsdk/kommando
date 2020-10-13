@@ -22,7 +22,7 @@ void main() {
         .pushUser(
             user: User(
                 displayName: "teste",
-                uid: "fakeuid",
+                uid: "fakeuid 2",
                 cpf: "95",
                 nome: "teste",
                 telefone: "21321321"))

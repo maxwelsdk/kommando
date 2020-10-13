@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:kommando/core/api/api_services.dart';
+import 'package:kommando/core/error/error.dart';
 import 'package:kommando/features/authentication/data/models/personal_data.dart';
 import 'package:kommando/features/user/data/i_user.dart';
 import 'package:http/http.dart';
@@ -28,7 +29,7 @@ class UserServices implements IUser {
         });
         return usersList;
       default:
-        return null;
+        return Error("Falha ao listar usuários");
     }
   }
 
@@ -42,7 +43,7 @@ class UserServices implements IUser {
       case HttpStatus.ok:
         return User.fromJson(jsonDecode(utf8.decode(_response.bodyBytes)));
       default:
-        return "Falha ao criar usuário";
+        return Error("Falha ao criar usuário");
     }
   }
 
