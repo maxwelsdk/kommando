@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:kommando/core/ui/linear_background_widget.dart';
 import 'package:kommando/features/login/ui/screen/widgets/custom_button.dart';
 import 'package:kommando/features/login/ui/states/login_state.dart';
 import 'package:kommando/features/login/ui/stores/login_store.dart';
@@ -18,17 +19,10 @@ class LoginScreen extends StatelessWidget {
 
     return Scaffold(
       key: _scaffoldKey,
-      body: SingleChildScrollView(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.blue, Colors.lightBlue],
-              stops: [0, 1],
-            ),
-          ),
-          child: Padding(
+      body: Stack(
+        children: [
+          LinearBackgroundWidget(),
+          Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -134,7 +128,7 @@ class LoginScreen extends StatelessWidget {
               ],
             ),
           ),
-        ),
+        ],
       ),
     );
   }

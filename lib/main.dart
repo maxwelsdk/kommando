@@ -31,12 +31,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        inputDecorationTheme: buildInputDecorationTheme(context),
-        appBarTheme: buildAppBarTheme(context),
-      ),
+      theme: buildThemeData(),
       home: FutureBuilder(
           future: _initialization,
           builder: (context, snapshot) {
@@ -70,28 +65,42 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  AppBarTheme buildAppBarTheme(BuildContext context) {
-    return AppBarTheme(
-      elevation: 0,
-      color: Colors.transparent,
-      iconTheme: IconThemeData(
-        color: Theme.of(context).primaryColor,
-      ),
-      textTheme: Typography.blackHelsinki,
-      centerTitle: true,
-    );
-  }
+  ThemeData buildThemeData() {
+    Color _primaryColor = const Color(0xFF0C3041);
+    Color _accentColor = const Color(0xFF2094EF);
 
-  InputDecorationTheme buildInputDecorationTheme(BuildContext context) {
-    return InputDecorationTheme(
-      border: OutlineInputBorder(
-        borderSide: BorderSide(color: Theme.of(context).primaryColor),
-        borderRadius: BorderRadius.all(
-          Radius.circular(5),
+    return ThemeData(
+      primaryColor: _primaryColor,
+      accentColor: _accentColor,
+      visualDensity: VisualDensity.adaptivePlatformDensity,
+      inputDecorationTheme: InputDecorationTheme(
+        disabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: _primaryColor,
+          ),
+        ),
+        border: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: _primaryColor,
+          ),
+          borderRadius: BorderRadius.all(
+            Radius.circular(5),
+          ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: _primaryColor,
+          ),
         ),
       ),
-      enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: Theme.of(context).primaryColor),
+      appBarTheme: AppBarTheme(
+        elevation: 0,
+        color: Colors.transparent,
+        iconTheme: IconThemeData(
+          color: _primaryColor,
+        ),
+        textTheme: Typography.blackHelsinki,
+        centerTitle: true,
       ),
     );
   }
