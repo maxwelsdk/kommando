@@ -23,6 +23,6 @@ class ApiServices {
   }
 
   Future<http.Response> delete({String uri, String id}) async {
-    return await http.delete("${Api.url}$uri", headers: defaultHeaders);
+    return await http.delete("${Api.url}$uri/$id", headers: defaultHeaders);
   }
 }

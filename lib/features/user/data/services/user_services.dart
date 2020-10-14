@@ -11,15 +11,20 @@ class UserServices implements IUser {
   final ApiServices _services = ApiServices();
 
   @override
-  Future fetchUser({String id}) {
-    // TODO: implement fetchUser
-    throw UnimplementedError();
+  Future fetchUser({String id}) async {
+    final Response _response = await _services.get(uri: "/users/$id");
+    switch (_response.statusCode) {
+      case HttpStatus.ok:
+        return User.fromJson(
+            jsonDecode(utf8.decode(_response.bodyBytes))['user']);
+      default:
+        return Error(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
+    }
   }
 
   @override
   Future fetchUsers() async {
-    final Response _response =
-        await _services.get(uri: "/users");
+    final Response _response = await _services.get(uri: "/users");
     switch (_response.statusCode) {
       case HttpStatus.ok:
         final usersList = List();
@@ -29,7 +34,7 @@ class UserServices implements IUser {
         });
         return usersList;
       default:
-        return Error("Falha ao listar usuários");
+        return Error(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
     }
   }
 
@@ -37,15 +42,23 @@ class UserServices implements IUser {
   Future pushUser({User user}) async {
     final Response _response =
         await _services.post(uri: "/users", body: user.toJson());
-    print(_response.statusCode);
-    print(_response.body);
     switch (_response.statusCode) {
       case HttpStatus.ok:
-        return User.fromJson(jsonDecode(utf8.decode(_response.bodyBytes)));
+        return User.fromJson(
+            jsonDecode(utf8.decode(_response.bodyBytes))['user']);
       default:
-        return Error("Falha ao criar usuário");
+        return Error(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
     }
   }
 
-
+  @override
+  Future deleteUserById({String id}) async {
+    final Response _response = await _services.delete(uri: "/users/", id: id);
+    switch (_response.statusCode) {
+      case HttpStatus.ok:
+        return jsonDecode(utf8.decode(_response.bodyBytes))['user'];
+      default:
+        return Error(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
+    }
+  }
 }

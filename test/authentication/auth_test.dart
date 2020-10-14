@@ -1,4 +1,3 @@
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kommando/core/api/api.dart';
 import 'package:kommando/features/authentication/data/models/personal_data.dart';
@@ -8,24 +7,29 @@ void main() {
   Api.url = "http://localhost:8080";
   final UserServices userServices = UserServices();
 
-  test("List users", () async {
-    await userServices.fetchUsers().then((value) {
-      for(User i in value) {
-        print(i.toJson());
+  group("/users", () {
+    String uidTest = "";
+
+    test("List users", () async {
+      await userServices.fetchUsers().then((value) => print(value));
+    });
+
+    test("Deve registrar, validar usuário e deletar", () async {
+      User matcher = User(
+          displayName: "user test",
+          uid: "0123456789",
+          cpf: "01212345677",
+          nome: "Teste from Dart",
+          telefone: "34 3232-9999");
+
+      final value = await userServices.pushUser(user: matcher);
+
+      if (value is User) {
+        uidTest = matcher.uid;
+        User user = await userServices.fetchUser(id: uidTest);
+        expect(user.uid, matcher.uid);
+        await userServices.deleteUserById(id: user.id);
       }
     });
-  });
-
-  test("Registro de usuário autenticado", () async {
-
-    await userServices
-        .pushUser(
-            user: User(
-                displayName: "teste",
-                uid: "fakeuid 2",
-                cpf: "95",
-                nome: "teste",
-                telefone: "21321321"))
-        .then((value) => print(value));
   });
 }

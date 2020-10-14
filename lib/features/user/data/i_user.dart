@@ -4,4 +4,5 @@ abstract class IUser {
   Future pushUser({User user});
   Future fetchUsers();
   Future fetchUser({String id});
+  Future deleteUserById({String id});
 }
