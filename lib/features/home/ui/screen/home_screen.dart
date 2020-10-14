@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kommando/core/ui/linear_background_widget.dart';
 import 'package:kommando/features/drawer/ui/widgets/drawer_widget.dart';
 import 'package:kommando/features/home/ui/widgets/qr_code_widget.dart';

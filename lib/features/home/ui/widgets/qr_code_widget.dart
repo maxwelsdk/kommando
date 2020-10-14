@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -16,7 +17,11 @@ class QrCodeWidgetButton extends StatelessWidget {
           Permission.camera.request().then((value) {
             if (value.isDenied || value.isPermanentlyDenied) openAppSettings();
             if (value.isGranted) {
-              print("granted");
+              FlutterBarcodeScanner.scanBarcode(
+                      "#ff6666", "Cancelar", true, ScanMode.QR)
+                  .then((value) => Scaffold.of(context)
+                      .showSnackBar(SnackBar(content: Text(value))))
+                  .catchError((onError) => print("Error: $onError"));
             }
           });
         },
