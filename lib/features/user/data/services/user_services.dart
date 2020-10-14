@@ -15,7 +15,7 @@ class UserServices implements IUser {
     final Response _response = await _services.get(uri: "/users/$id");
     switch (_response.statusCode) {
       case HttpStatus.ok:
-        return User.fromJson(
+        return AppUser.fromJson(
             jsonDecode(utf8.decode(_response.bodyBytes))['user']);
       default:
         return Error(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
@@ -30,7 +30,7 @@ class UserServices implements IUser {
         final usersList = List();
         final json = jsonDecode(utf8.decode(_response.bodyBytes))['users'];
         json.forEach((user) {
-          usersList.add(User.fromJson(user));
+          usersList.add(AppUser.fromJson(user));
         });
         return usersList;
       default:
@@ -39,12 +39,12 @@ class UserServices implements IUser {
   }
 
   @override
-  Future pushUser({User user}) async {
+  Future pushUser({AppUser user}) async {
     final Response _response =
         await _services.post(uri: "/users", body: user.toJson());
     switch (_response.statusCode) {
       case HttpStatus.ok:
-        return User.fromJson(
+        return AppUser.fromJson(
             jsonDecode(utf8.decode(_response.bodyBytes))['user']);
       default:
         return Error(jsonDecode(utf8.decode(_response.bodyBytes))['message']);

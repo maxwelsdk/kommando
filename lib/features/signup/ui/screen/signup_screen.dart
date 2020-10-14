@@ -26,7 +26,7 @@ class SignUpScreen extends StatelessWidget {
 
   final repetirSenhaController = TextEditingController();
 
-  final User _personalData = User();
+  final AppUser _personalData = AppUser();
 
   @override
   Widget build(BuildContext context) {

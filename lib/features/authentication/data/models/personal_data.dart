@@ -1,4 +1,4 @@
-class User {
+class AppUser {
   String id;
   String uid;
   String nome;
@@ -6,7 +6,7 @@ class User {
   String cpf;
   String telefone;
 
-  User(
+  AppUser(
       {this.id,
         this.uid,
         this.nome,
@@ -14,7 +14,7 @@ class User {
         this.cpf,
         this.telefone});
 
-  User.fromJson(Map<String, dynamic> json) {
+  AppUser.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     uid = json['uid'];
     nome = json['nome'];

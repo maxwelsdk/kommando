@@ -15,7 +15,7 @@ void main() {
     });
 
     test("Deve registrar, validar usuário e deletar", () async {
-      User matcher = User(
+      AppUser matcher = AppUser(
           displayName: "user test",
           uid: "0123456789",
           cpf: "01212345677",
@@ -24,9 +24,9 @@ void main() {
 
       final value = await userServices.pushUser(user: matcher);
 
-      if (value is User) {
+      if (value is AppUser) {
         uidTest = matcher.uid;
-        User user = await userServices.fetchUser(id: uidTest);
+        AppUser user = await userServices.fetchUser(id: uidTest);
         expect(user.uid, matcher.uid);
         await userServices.deleteUserById(id: user.id);
       }
