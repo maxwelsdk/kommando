@@ -18,4 +18,4 @@ samples, guidance on mobile development, and a full API reference.
 
 
 Icons used in this project:
-40-Qr code - Created by DailyPM from the Noun Project
+noun_code_1371523 - Created by Aham Brahma from the Noun Project
