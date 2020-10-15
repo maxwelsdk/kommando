@@ -1,25 +1,34 @@
 import 'package:kommando/core/consumidor/data/models/consumidor.dart';
-import 'package:kommando/features/lobby/data/enum_lobby.dart';
 
 class Lobby {
-  int id;
+  String id;
   String descricao;
-  LobbyStatus status;
-  List<Consumidor> consumidores;
+  String lobbyStatus;
+  List<Consumidor> consumidorList;
 
-  Lobby.fromMap(Map<String, dynamic> map) {
-    this.id = map['id'];
-    this.descricao = map['descricao'];
-    this.status = map['status'];
-    this.consumidores = map['consumidores'] ?? List<Consumidor>();
+  Lobby({this.id, this.descricao, this.lobbyStatus, this.consumidorList});
+
+  Lobby.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    descricao = json['descricao'];
+    lobbyStatus = json['lobbyStatus'];
+    if (json['consumidorList'] != null) {
+      consumidorList = new List<Consumidor>();
+      json['consumidorList'].forEach((v) {
+        consumidorList.add(new Consumidor.fromJson(v));
+      });
+    }
   }
 
-  Map<String, dynamic> toMap(){
-    final map = Map<String, dynamic>();
-    map['id'] = this.id;
-    map['descricao'] = this.descricao;
-    map['status'] = this.status;
-    map['consumidores'] = this.consumidores;
-    return map;
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['descricao'] = this.descricao;
+    data['lobbyStatus'] = this.lobbyStatus;
+    if (this.consumidorList != null) {
+      data['consumidorList'] =
+          this.consumidorList.map((v) => v.toJson()).toList();
+    }
+    return data;
   }
 }

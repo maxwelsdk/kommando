@@ -1,29 +1,77 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:kommando/core/api/api_services.dart';
+import 'package:kommando/core/api/message.dart';
 import 'package:kommando/features/lobby/data/i_lobby.dart';
 import 'package:kommando/features/lobby/data/models/lobby.dart';
 
 class LobbyServices implements ILobby {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  ApiServices _services = ApiServices();
 
   @override
-  Future<DocumentReference> create(Lobby lobby) {
-    return _firestore.collection("lobbies").add(lobby.toMap());
+  Future deleteLobby({String id}) async {
+    final _response = await _services.delete(uri: "/lobbies", id: id);
+    switch (_response.statusCode) {
+      case HttpStatus.ok:
+        return Message(
+            jsonDecode(utf8.decode(_response.bodyBytes))["Lobby deletada"]);
+        break;
+      default:
+        return Message(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
+        break;
+    }
   }
 
   @override
-  Future<void> delete(int lobbyId) {
-    return _firestore
-        .collection("lobbies")
-        .where("lobbyId", isEqualTo: lobbyId)
-        .get()
-        .then((QuerySnapshot value) => value.docs.forEach((doc) {
-              doc.reference.delete();
-            }));
+  Future fetchLobbies() async {
+    final _response = await _services.get(uri: "/lobbies");
+    switch (_response.statusCode) {
+      case HttpStatus.ok:
+        final lobbies = jsonDecode(utf8.decode(_response.bodyBytes))["lobbies"];
+        final lobbiesList = List<Lobby>();
+        for (var lobby in lobbies) {
+          lobbiesList.add(Lobby.fromJson(lobby));
+        }
+        return lobbiesList;
+        break;
+      default:
+        return Message(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
+        break;
+    }
   }
 
   @override
-  Future<DocumentReference> update(Lobby lobby) {
-    // TODO: implement update
+  Future fetchLobby({String id}) async {
+    final _response = await _services.get(uri: "/lobbies/$id");
+    switch (_response.statusCode) {
+      case HttpStatus.ok:
+        return Lobby.fromJson(
+            jsonDecode(utf8.decode(_response.bodyBytes))["lobby"]);
+        break;
+      default:
+        return Message(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
+        break;
+    }
+  }
+
+  @override
+  Future updateLobby({Lobby lobby}) {
+    // TODO: implement updateLobby
     throw UnimplementedError();
+  }
+
+  @override
+  Future pushLobby({Lobby lobby}) async {
+    final _response = await _services.post(uri: "/lobbies", body: lobby);
+    switch (_response.statusCode) {
+      case HttpStatus.created:
+        return Lobby.fromJson(
+            jsonDecode(utf8.decode(_response.bodyBytes))['lobby']);
+        break;
+      default:
+        return Message(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
+        break;
+    }
   }
 }
