@@ -25,4 +25,10 @@ class ApiServices {
   Future<http.Response> delete({String uri, String id}) async {
     return await http.delete("${Api.url}$uri/$id", headers: defaultHeaders);
   }
+
+  Future<http.Response> patch({String uri, dynamic body}) async {
+    final http.Response _response = await http.patch("${Api.url}$uri",
+        headers: defaultHeaders, body: jsonEncode(body));
+    return _response;
+  }
 }

@@ -15,7 +15,7 @@ class LobbyServices implements ILobby {
     switch (_response.statusCode) {
       case HttpStatus.ok:
         return Message(
-            jsonDecode(utf8.decode(_response.bodyBytes))["Lobby deletada"]);
+            jsonDecode(utf8.decode(_response.bodyBytes))["id"]);
         break;
       default:
         return Message(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
@@ -56,9 +56,17 @@ class LobbyServices implements ILobby {
   }
 
   @override
-  Future updateLobby({Lobby lobby}) {
-    // TODO: implement updateLobby
-    throw UnimplementedError();
+  Future updateLobby({Lobby lobby}) async {
+    final _response = await _services.post(uri: "/lobbies", body: lobby);
+    switch (_response.statusCode) {
+      case HttpStatus.ok:
+        return Lobby.fromJson(
+            jsonDecode(utf8.decode(_response.bodyBytes))['lobby']);
+        break;
+      default:
+        return Message(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
+        break;
+    }
   }
 
   @override

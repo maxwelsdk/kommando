@@ -12,7 +12,7 @@ void main() {
     Lobby lobbyToDelete =
         await services.pushLobby(lobby: Lobby(descricao: "Lobby para deletar"));
     final response = await services.deleteLobby(id: lobbyToDelete.id);
-    expect(response.message, lobbyToDelete.id);
+    expect(response, lobbyToDelete.id);
   });
 
   test("Busca lista de lobbies", () async {
