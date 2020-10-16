@@ -19,7 +19,7 @@ class ItemServices implements IItem {
         return Message(jsonDecode(utf8.decode(_response.bodyBytes))['id']);
         break;
       default:
-        return Error(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
+        return ApiError(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
     }
   }
 
@@ -32,7 +32,7 @@ class ItemServices implements IItem {
         return Item.fromJson(json);
         break;
       default:
-        return Error(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
+        return ApiError(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
     }
   }
 
@@ -49,7 +49,7 @@ class ItemServices implements IItem {
         return itens;
         break;
       default:
-        return Error(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
+        return ApiError(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
     }
   }
 
@@ -63,7 +63,7 @@ class ItemServices implements IItem {
             jsonDecode(utf8.decode(_response.bodyBytes))['item']);
         break;
       default:
-        return Error(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
+        return ApiError(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
     }
   }
 }

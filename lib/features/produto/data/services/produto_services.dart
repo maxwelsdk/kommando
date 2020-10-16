@@ -19,7 +19,7 @@ class ProdutoServices implements IProduto {
         return Message(jsonDecode(utf8.decode(_response.bodyBytes))['id']);
         break;
       default:
-        return Error(jsonDecode(utf8.decode(_response.bodyBytes)));
+        return ApiError(jsonDecode(utf8.decode(_response.bodyBytes)));
     }
   }
 
@@ -66,7 +66,7 @@ class ProdutoServices implements IProduto {
             jsonDecode(utf8.decode(_response.bodyBytes))['produto']);
         break;
       default:
-        return Error(jsonDecode(utf8.decode(_response.bodyBytes)));
+        return ApiError(jsonDecode(utf8.decode(_response.bodyBytes)));
         break;
     }
   }
@@ -81,7 +81,7 @@ class ProdutoServices implements IProduto {
             jsonDecode(utf8.decode(_response.bodyBytes))['produto']);
         break;
       default:
-        return Error(jsonDecode(utf8.decode(_response.bodyBytes)));
+        return ApiError(jsonDecode(utf8.decode(_response.bodyBytes)));
         break;
     }
   }

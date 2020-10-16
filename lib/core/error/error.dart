@@ -1,5 +1,5 @@
-class Error {
+class ApiError {
   final String message;
 
-  Error(this.message);
+  ApiError(this.message);
 }

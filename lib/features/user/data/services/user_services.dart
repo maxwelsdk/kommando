@@ -18,7 +18,7 @@ class UserServices implements IUser {
         return AppUser.fromJson(
             jsonDecode(utf8.decode(_response.bodyBytes))['user']);
       default:
-        return Error(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
+        return ApiError(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
     }
   }
 
@@ -34,7 +34,7 @@ class UserServices implements IUser {
         });
         return usersList;
       default:
-        return Error(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
+        return ApiError(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
     }
   }
 
@@ -47,7 +47,7 @@ class UserServices implements IUser {
         return AppUser.fromJson(
             jsonDecode(utf8.decode(_response.bodyBytes))['user']);
       default:
-        return Error(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
+        return ApiError(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
     }
   }
 
@@ -58,7 +58,7 @@ class UserServices implements IUser {
       case HttpStatus.ok:
         return jsonDecode(utf8.decode(_response.bodyBytes))['user'];
       default:
-        return Error(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
+        return ApiError(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
     }
   }
 }
