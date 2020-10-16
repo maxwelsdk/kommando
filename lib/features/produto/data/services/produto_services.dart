@@ -16,7 +16,7 @@ class ProdutoServices implements IProduto {
     final Response _response = await _services.delete(uri: "/produtos", id: id);
     switch (_response.statusCode) {
       case HttpStatus.ok:
-        return jsonDecode(utf8.decode(_response.bodyBytes))['id'];
+        return Message(jsonDecode(utf8.decode(_response.bodyBytes))['id']);
         break;
       default:
         return Error(jsonDecode(utf8.decode(_response.bodyBytes)));

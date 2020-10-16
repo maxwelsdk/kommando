@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kommando/core/api/api.dart';
 import 'package:kommando/core/produto/models/produto.dart';
@@ -50,7 +49,7 @@ void main() {
       expect(value.id, isNotEmpty);
       await produtoServices
           .deleteProdutoById(id: value.id)
-          .then((deleteResponse) => expect(value.id, deleteResponse));
+          .then((deleteResponse) => expect(value.id, deleteResponse.message));
     });
   });
 
