@@ -13,7 +13,7 @@ void main() {
     await _pedidoServices
         .pushPedido(
             pedido: Pedido(
-                consumidorId: "5f66178003ce0a71bda2098b",
+                consumidorId: "5f89f7846062c450e888503c",
                 items: [],
                 lobbyId: "5f62b57ef8cbe73384c84aa0"))
         .then((value) {
@@ -29,7 +29,7 @@ void main() {
     final pedidoCriado = await _pedidoServices
         .pushPedido(
             pedido: Pedido(
-                consumidorId: "5f66178003ce0a71bda2098b",
+                consumidorId: "5f89f7846062c450e888503c",
                 items: [Item(id: "1", quantidade: 1, produtoId: "1")],
                 lobbyId: "5f62b57ef8cbe73384c84aa0"))
         .then((value) {
@@ -56,7 +56,7 @@ void main() {
             id: "1",
             lobbyId: "5f62b57ef8cbe73384c84aa0",
             items: [],
-            consumidorId: "5f66178003ce0a71bda2098b"));
+            consumidorId: "5f89f7846062c450e888503c"));
 
     for (var pedido in listPedidos) {
       await _pedidoServices
@@ -83,7 +83,7 @@ void main() {
                 id: "1",
                 lobbyId: "5f62b57ef8cbe73384c84aa0",
                 items: [],
-                consumidorId: "5f66178003ce0a71bda2098b"))
+                consumidorId: "5f89f7846062c450e888503c"))
         .then((value) {
       expect(value.id, isNotEmpty);
       return value;
