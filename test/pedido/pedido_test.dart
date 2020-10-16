@@ -50,11 +50,18 @@ void main() {
   });
 
   test("cria lista de pedidos", () async {
-    final listPedidos = List.generate(5,
-        (index) => Pedido(id: "1", lobbyId: "5f62b57ef8cbe73384c84aa0", items: [], consumidorId: "5f66178003ce0a71bda2098b"));
+    final listPedidos = List.generate(
+        5,
+        (index) => Pedido(
+            id: "1",
+            lobbyId: "5f62b57ef8cbe73384c84aa0",
+            items: [],
+            consumidorId: "5f66178003ce0a71bda2098b"));
 
     for (var pedido in listPedidos) {
-      await _pedidoServices.pushPedido(pedido: pedido).then((value) => expect(value.id, isNotEmpty));
+      await _pedidoServices
+          .pushPedido(pedido: pedido)
+          .then((value) => expect(value.id, isNotEmpty));
     }
 
     final pedidos = await _pedidoServices.fetchPedidos();
@@ -62,8 +69,34 @@ void main() {
     if (pedidos is List<Pedido>) {
       expect(pedidos, isList);
       for (var pedido in pedidos) {
-        await _pedidoServices.deletePedido(id: pedido.id).then((value) => expect(value.message, pedido.id));
+        await _pedidoServices
+            .deletePedido(id: pedido.id)
+            .then((value) => expect(value.message, pedido.id));
       }
+    }
+  });
+
+  test("Busca um único pedido", () async {
+    final pedido = await _pedidoServices
+        .pushPedido(
+            pedido: Pedido(
+                id: "1",
+                lobbyId: "5f62b57ef8cbe73384c84aa0",
+                items: [],
+                consumidorId: "5f66178003ce0a71bda2098b"))
+        .then((value) {
+      expect(value.id, isNotEmpty);
+      return value;
+    });
+
+    if (pedido is Pedido) {
+      await _pedidoServices
+          .fetchPedido(id: pedido.id)
+          .then((value) => expect(value.id, pedido.id));
+
+      await _pedidoServices
+          .deletePedido(id: pedido.id)
+          .then((value) => expect(value.message, pedido.id));
     }
   });
 }
