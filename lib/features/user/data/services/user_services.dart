@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:kommando/core/api/api_services.dart';
+import 'package:kommando/core/api/message.dart';
 import 'package:kommando/core/error/error.dart';
 import 'package:kommando/features/user/data/i_user.dart';
 import 'package:http/http.dart';
@@ -56,7 +57,7 @@ class UserServices implements IUser {
     final Response _response = await _services.delete(uri: "/users/", id: id);
     switch (_response.statusCode) {
       case HttpStatus.ok:
-        return jsonDecode(utf8.decode(_response.bodyBytes))['user'];
+        return Message(jsonDecode(utf8.decode(_response.bodyBytes))['id']);
       default:
         return ApiError(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
     }

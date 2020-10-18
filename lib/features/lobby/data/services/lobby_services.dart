@@ -14,8 +14,7 @@ class LobbyServices implements ILobby {
     final _response = await _services.delete(uri: "/lobbies", id: id);
     switch (_response.statusCode) {
       case HttpStatus.ok:
-        return Message(
-            jsonDecode(utf8.decode(_response.bodyBytes))["id"]);
+        return Message(jsonDecode(utf8.decode(_response.bodyBytes))["id"]);
         break;
       default:
         return Message(jsonDecode(utf8.decode(_response.bodyBytes))['message']);

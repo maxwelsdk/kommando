@@ -42,4 +42,19 @@ class ConsumidorServices implements IConsumidor {
         break;
     }
   }
+
+  @override
+  Future deleteConsumidor({String id}) async {
+    final _response =
+        await _services.delete(uri: "/consumidores", id: id);
+    switch (_response.statusCode) {
+      case HttpStatus.ok:
+        return Message(
+            jsonDecode(utf8.decode(_response.bodyBytes))["id"]);
+        break;
+      default:
+        return Message(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
+        break;
+    }
+  }
 }
