@@ -1,10 +1,8 @@
-import 'package:kommando/core/pedido/models/pedido.dart';
-
 class Consumidor {
   String id;
   String uid;
   String lobbyId;
-  List<Pedido> pedidos;
+  List<String> pedidos;
 
   Consumidor({this.id, this.uid, this.lobbyId, this.pedidos});
 
@@ -13,9 +11,9 @@ class Consumidor {
     uid = json['uid'];
     lobbyId = json['lobbyId'];
     if (json['pedidos'] != null) {
-      pedidos = new List<Pedido>();
+      pedidos = new List<String>();
       json['pedidos'].forEach((v) {
-        pedidos.add(new Pedido.fromJson(v));
+        pedidos.add(v);
       });
     }
   }
@@ -26,7 +24,7 @@ class Consumidor {
     data['uid'] = this.uid;
     data['lobbyId'] = this.lobbyId;
     if (this.pedidos != null) {
-      data['pedidos'] = this.pedidos.map((v) => v.toJson()).toList();
+      data['pedidos'] = this.pedidos.map((v) => v).toList();
     }
     return data;
   }

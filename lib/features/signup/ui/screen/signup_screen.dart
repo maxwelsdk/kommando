@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:kommando/features/authentication/data/models/personal_data.dart';
 import 'package:kommando/features/signup/ui/screen/widgets/personal_data_widget.dart';
 import 'package:kommando/features/signup/ui/screen/widgets/user_data_widget.dart';
 import 'package:kommando/features/signup/ui/states/signup_states.dart';
 import 'package:kommando/features/signup/ui/stores/signup_store.dart';
+import 'package:kommando/features/user/data/models/app_user.dart';
 import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatelessWidget {

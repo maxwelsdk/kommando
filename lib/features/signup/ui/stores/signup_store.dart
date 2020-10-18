@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:kommando/features/authentication/data/models/personal_data.dart';
 import 'package:kommando/features/authentication/data/services/authentication_services.dart';
 import 'package:kommando/features/signup/ui/states/signup_states.dart';
+import 'package:kommando/features/user/data/models/app_user.dart';
 import 'package:kommando/features/user/data/services/user_services.dart';
 import 'package:mobx/mobx.dart';
 

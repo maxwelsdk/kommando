@@ -3,9 +3,9 @@ import 'dart:io';
 
 import 'package:kommando/core/api/api_services.dart';
 import 'package:kommando/core/error/error.dart';
-import 'package:kommando/features/authentication/data/models/personal_data.dart';
 import 'package:kommando/features/user/data/i_user.dart';
 import 'package:http/http.dart';
+import 'package:kommando/features/user/data/models/app_user.dart';
 
 class UserServices implements IUser {
   final ApiServices _services = ApiServices();

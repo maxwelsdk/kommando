@@ -1,4 +1,4 @@
-import 'package:kommando/features/authentication/data/models/personal_data.dart';
+import 'package:kommando/features/user/data/models/app_user.dart';
 
 abstract class IUser {
   Future pushUser({AppUser user});

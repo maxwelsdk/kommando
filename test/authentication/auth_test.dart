@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kommando/core/api/api.dart';
-import 'package:kommando/features/authentication/data/models/personal_data.dart';
+import 'package:kommando/features/user/data/models/app_user.dart';
 import 'package:kommando/features/user/data/services/user_services.dart';
 
 void main() {
