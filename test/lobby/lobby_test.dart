@@ -31,6 +31,9 @@ void main() {
   test("Deve buscar lobby de teste", () async {
     await services
         .fetchLobby(id: "5f62b57ef8cbe73384c84aa0")
-        .then((value) => expect(value.id, "5f62b57ef8cbe73384c84aa0"));
+        .then((value) {
+          print(value.toJson());
+          expect(value.id, "5f62b57ef8cbe73384c84aa0");
+        });
   });
 }

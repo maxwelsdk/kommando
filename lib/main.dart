@@ -1,9 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:kommando/features/categoria/ui/stores/categoria_store.dart';
 import 'package:kommando/features/home/ui/screen/home_screen.dart';
+import 'package:kommando/features/home/ui/stores/home_store.dart';
 import 'package:kommando/features/login/ui/screen/login_screen.dart';
 import 'package:kommando/features/login/ui/stores/login_store.dart';
+import 'package:kommando/features/routes/routes.dart';
 import 'package:kommando/features/signup/ui/stores/signup_store.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +20,12 @@ void main() {
         ),
         Provider(
           create: (context) => SignupStore(),
+        ),
+        Provider(
+          create: (context) => HomeStore(),
+        ),
+        Provider(
+          create: (context) => CategoriaStore(),
         )
       ],
       child: MyApp(),
@@ -32,6 +41,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Kommando Demo',
       theme: buildThemeData(),
+      initialRoute: Routes.lobby,
+      onGenerateRoute: Routes.generate,
       home: FutureBuilder(
           future: _initialization,
           builder: (context, snapshot) {
@@ -74,10 +85,8 @@ class MyApp extends StatelessWidget {
       accentColor: _accentColor,
       visualDensity: VisualDensity.adaptivePlatformDensity,
       inputDecorationTheme: InputDecorationTheme(
-        labelStyle: TextStyle(
-          color: _primaryColor,
-          fontWeight: FontWeight.bold
-        ),
+        labelStyle:
+            TextStyle(color: _primaryColor, fontWeight: FontWeight.bold),
         disabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: _primaryColor,
@@ -103,7 +112,7 @@ class MyApp extends StatelessWidget {
         iconTheme: IconThemeData(
           color: _primaryColor,
         ),
-        textTheme: Typography.blackHelsinki,
+        textTheme: Typography.blackMountainView,
         centerTitle: true,
       ),
     );

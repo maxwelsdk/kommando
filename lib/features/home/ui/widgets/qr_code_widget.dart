@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:kommando/features/home/ui/stores/home_store.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 
 class QrCodeWidgetButton extends StatelessWidget {
   const QrCodeWidgetButton({
@@ -10,18 +12,18 @@ class QrCodeWidgetButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _homeStore = Provider.of<HomeStore>(context);
     return Material(
       color: Colors.transparent,
       child: InkWell(
         onTap: () async {
-          Permission.camera.request().then((value) {
+          Permission.camera.request().then((value) async {
             if (value.isDenied || value.isPermanentlyDenied) openAppSettings();
             if (value.isGranted) {
-              FlutterBarcodeScanner.scanBarcode(
+              final result = await FlutterBarcodeScanner.scanBarcode(
                       "#ff6666", "Cancelar", true, ScanMode.QR)
-                  .then((value) => Scaffold.of(context)
-                      .showSnackBar(SnackBar(content: Text(value))))
                   .catchError((onError) => print("Error: $onError"));
+              await _homeStore.findLobbyById(id: result);
             }
           });
         },

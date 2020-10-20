@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kommando/core/ui/linear_background_widget.dart';
 import 'package:kommando/features/drawer/ui/widgets/drawer_widget.dart';
+import 'package:kommando/features/home/ui/states/home_states.dart';
+import 'package:kommando/features/home/ui/stores/home_store.dart';
 import 'package:kommando/features/home/ui/widgets/qr_code_widget.dart';
+import 'package:kommando/features/routes/routes.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final _homeStore = Provider.of<HomeStore>(context);
     return Scaffold(
       drawer: MyDrawer(),
       body: Container(
@@ -57,6 +63,22 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+                ),
+                Observer(
+                  builder: (context) {
+                    var state = _homeStore.state;
+                    if (state is HomeNotFoundState) {
+                      return Text(
+                        state.message,
+                        style: TextStyle(color: Colors.white),
+                      );
+                    }
+                    if (state is HomeConnectedState) {
+                      Navigator.pushNamed(context, Routes.lobby, arguments: state.lobby.id);
+                      return Container();
+                    }
+                    return Container();
+                  },
                 )
               ],
             )
