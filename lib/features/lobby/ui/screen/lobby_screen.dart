@@ -40,7 +40,7 @@ class _LobbyScreenState extends State<LobbyScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "${widget.lobbyId ?? "5f62b57ef8cbe73384c84aa0"}",
+          "${widget.lobbyId ?? ""}",
         ),
         actions: [
           Center(
@@ -84,7 +84,7 @@ class _LobbyScreenState extends State<LobbyScreen> {
                             itemScrollController.scrollTo(
                               index: map[state.categorias[index].id],
                               curve: Curves.ease,
-                              duration: Duration(milliseconds: 100),
+                              duration: Duration(milliseconds: 200),
                             );
                             setState(() {
                               selectedItem = index;
@@ -155,6 +155,10 @@ class _LobbyScreenState extends State<LobbyScreen> {
               },
             ),
           ),
+          Container(
+            height: 80,
+            color: Theme.of(context).primaryColor,
+          )
         ],
       ),
     );

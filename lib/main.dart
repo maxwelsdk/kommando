@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Kommando Demo',
       theme: buildThemeData(),
-      initialRoute: Routes.lobby,
+      initialRoute: Routes.home,
       onGenerateRoute: Routes.generate,
       home: FutureBuilder(
           future: _initialization,

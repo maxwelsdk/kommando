@@ -73,10 +73,6 @@ class HomeScreen extends StatelessWidget {
                         style: TextStyle(color: Colors.white),
                       );
                     }
-                    if (state is HomeConnectedState) {
-                      Navigator.pushNamed(context, Routes.lobby, arguments: state.lobby.id);
-                      return Container();
-                    }
                     return Container();
                   },
                 )
