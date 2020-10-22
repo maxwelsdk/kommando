@@ -6,6 +6,7 @@ import 'package:kommando/features/home/ui/screen/home_screen.dart';
 import 'package:kommando/features/home/ui/stores/home_store.dart';
 import 'package:kommando/features/login/ui/screen/login_screen.dart';
 import 'package:kommando/features/login/ui/stores/login_store.dart';
+import 'package:kommando/features/produto/ui/stores/produto_store.dart';
 import 'package:kommando/features/routes/routes.dart';
 import 'package:kommando/features/signup/ui/stores/signup_store.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +27,9 @@ void main() {
         ),
         Provider(
           create: (context) => CategoriaStore(),
+        ),
+        Provider(
+          create: (context) => ProdutoStore(),
         )
       ],
       child: MyApp(),

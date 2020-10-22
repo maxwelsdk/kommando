@@ -24,50 +24,65 @@ class CategoriaServices implements ICategoria {
 
   @override
   Future fetchCategorias() async {
-    final _response = await _apiServices.get(uri: "/categorias");
-    switch (_response.statusCode) {
-      case HttpStatus.ok:
-        final categorias =
-            jsonDecode(utf8.decode(_response.bodyBytes))["categorias"];
-        final categoriasList = List<Categoria>();
-        for (var categoria in categorias) {
-          categoriasList.add(Categoria.fromJson(categoria));
-        }
-        return categoriasList;
-        break;
-      default:
-        return Message(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
-        break;
+    try {
+      final _response = await _apiServices.get(uri: "/categorias");
+      switch (_response.statusCode) {
+        case HttpStatus.ok:
+          final categorias =
+              jsonDecode(utf8.decode(_response.bodyBytes))["categorias"];
+          final categoriasList = List<Categoria>();
+          for (var categoria in categorias) {
+            categoriasList.add(Categoria.fromJson(categoria));
+          }
+          return categoriasList;
+          break;
+        default:
+          return Message(
+              jsonDecode(utf8.decode(_response.bodyBytes))['message']);
+          break;
+      }
+    } catch (e) {
+      return Message(e.toString());
     }
   }
 
   @override
   Future pushCategoria({Categoria categoria}) async {
-    final _response =
-        await _apiServices.post(uri: "/categorias", body: categoria);
-    switch (_response.statusCode) {
-      case HttpStatus.created:
-        return Categoria.fromJson(
-            jsonDecode(utf8.decode(_response.bodyBytes))['categoria']);
-        break;
-      default:
-        return Message(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
-        break;
+    try {
+      final _response =
+          await _apiServices.post(uri: "/categorias", body: categoria);
+      switch (_response.statusCode) {
+        case HttpStatus.created:
+          return Categoria.fromJson(
+              jsonDecode(utf8.decode(_response.bodyBytes))['categoria']);
+          break;
+        default:
+          return Message(
+              jsonDecode(utf8.decode(_response.bodyBytes))['message']);
+          break;
+      }
+    } catch (e) {
+      return Message(e.toString());
     }
   }
 
   @override
   Future updateCategoria({Categoria categoria}) async {
-    final _response =
-        await _apiServices.patch(uri: "/categorias", body: categoria);
-    switch (_response.statusCode) {
-      case HttpStatus.ok:
-        return Categoria.fromJson(
-            jsonDecode(utf8.decode(_response.bodyBytes))['categoria']);
-        break;
-      default:
-        return Message(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
-        break;
+    try {
+      final _response =
+          await _apiServices.patch(uri: "/categorias", body: categoria);
+      switch (_response.statusCode) {
+        case HttpStatus.ok:
+          return Categoria.fromJson(
+              jsonDecode(utf8.decode(_response.bodyBytes))['categoria']);
+          break;
+        default:
+          return Message(
+              jsonDecode(utf8.decode(_response.bodyBytes))['message']);
+          break;
+      }
+    } catch (e) {
+      return Message(e.toString());
     }
   }
 

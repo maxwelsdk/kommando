@@ -18,6 +18,7 @@ abstract class _CategoriaStore with Store {
   CategoriaState setState(CategoriaState value) => this.state = value;
 
   Future<void> getCategorias() async {
+    setState(CategoriaLoadingState());
     await _categoriaServices.fetchCategorias().then((value) {
       if (value is List<Categoria>) {
         setState(CategoriaDoneState(value));
