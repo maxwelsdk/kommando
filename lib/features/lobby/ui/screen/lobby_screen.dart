@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:kommando/core/produto/models/produto.dart';
 import 'package:kommando/features/categoria/ui/states/categoria_states.dart';
 import 'package:kommando/features/categoria/ui/stores/categoria_store.dart';
+import 'package:kommando/features/lobby/ui/widgets/produto_widget.dart';
 import 'package:kommando/features/lobby/ui/widgets/top_option_categoria_widget.dart';
 import 'package:kommando/features/produto/ui/stores/produto_store.dart';
-import 'package:kommando/utils/money_utils.dart';
 import 'package:provider/provider.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class LobbyScreen extends StatefulWidget {
   final String lobbyId;
@@ -18,6 +18,11 @@ class LobbyScreen extends StatefulWidget {
 }
 
 class _LobbyScreenState extends State<LobbyScreen> {
+  final ItemScrollController itemScrollController = ItemScrollController();
+  final ItemPositionsListener itemPositionsListener =
+      ItemPositionsListener.create();
+  int selectedItem = 0;
+
   @override
   void initState() {
     Future.delayed(Duration.zero, () async {
@@ -30,6 +35,7 @@ class _LobbyScreenState extends State<LobbyScreen> {
   Widget build(BuildContext context) {
     final _categoriaStore = Provider.of<CategoriaStore>(context);
     final _produtoStore = Provider.of<ProdutoStore>(context);
+    final Map map = Map<String, int>();
 
     return Scaffold(
       appBar: AppBar(
@@ -73,8 +79,21 @@ class _LobbyScreenState extends State<LobbyScreen> {
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: EdgeInsets.only(left: 12),
-                        child: OptionCategoriaWidget(
-                          texto: state.categorias[index].nome,
+                        child: GestureDetector(
+                          onTap: () {
+                            itemScrollController.scrollTo(
+                              index: map[state.categorias[index].id],
+                              curve: Curves.ease,
+                              duration: Duration(milliseconds: 100),
+                            );
+                            setState(() {
+                              selectedItem = index;
+                            });
+                          },
+                          child: OptionCategoriaWidget(
+                            texto: state.categorias[index].nome,
+                            isSelected: index == selectedItem,
+                          ),
                         ),
                       );
                     },
@@ -85,87 +104,57 @@ class _LobbyScreenState extends State<LobbyScreen> {
             },
           ),
           Expanded(
-            child: SingleChildScrollView(
-              child: Observer(
-                builder: (context) {
-                  var state = _categoriaStore.state;
-                  if (state is CategoriaDoneState) {
-                    return FutureBuilder(
-                      future: Future.delayed(Duration.zero, () async {
-                        final children = List<Widget>();
-                        for (var categoria in state.categorias) {
-                          children.add(OptionCategoriaWidget(
-                            texto: categoria.nome,
-                            isSelected: true,
+            child: Observer(
+              builder: (context) {
+                var state = _categoriaStore.state;
+                if (state is CategoriaDoneState) {
+                  return FutureBuilder(
+                    future: Future.delayed(Duration.zero, () async {
+                      final children = List<Widget>();
+                      for (var categoria in state.categorias) {
+                        map[categoria.id] = children.length;
+                        children.add(OptionCategoriaWidget(
+                          texto: categoria.nome,
+                          isSelected: true,
+                        ));
+                        children.add(Divider(
+                          thickness: 1,
+                        ));
+                        for (var item in categoria.itens) {
+                          final produto =
+                              await _produtoStore.getProduto(id: item);
+                          children.add(ProdutoWidget(
+                            produto: produto,
                           ));
-                          children.add(Divider(
-                            thickness: 1,
-                          ));
-                          for (var item in categoria.itens) {
-                            final produto =
-                                await _produtoStore.getProduto(id: item);
-                            children.add(ProdutoWidget(
-                              produto: produto,
-                            ));
-                            children.add(Divider());
-                          }
+                          children.add(Divider());
                         }
-                        return children;
-                      }),
-                      builder: (context, snapshot) {
-                        if (!snapshot.hasData) return CircularProgressIndicator();
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: snapshot.data,
-                          ),
+                      }
+                      return children;
+                    }),
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: CircularProgressIndicator(),
                         );
-                      },
-                    );
-                  }
-                  return Container();
-                },
-              ),
+                      }
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ScrollablePositionedList.builder(
+                          itemScrollController: itemScrollController,
+                          itemPositionsListener: itemPositionsListener,
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (context, index) {
+                            return snapshot.data[index];
+                          },
+                        ),
+                      );
+                    },
+                  );
+                }
+                return Container();
+              },
             ),
           ),
-        ],
-      ),
-    );
-  }
-}
-
-class ProdutoWidget extends StatelessWidget {
-  final Produto produto;
-
-  const ProdutoWidget({
-    Key key,
-    this.produto,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          OptionCategoriaWidget(
-            texto: produto.titulo,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 14.0),
-            child: Text(produto.descricao),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Text(
-                "R\$${MoneyUtils.parseDoubleToMoneyText(produto.preco)}",
-                style: TextStyle(fontSize: 24),
-              )
-            ],
-          )
         ],
       ),
     );
