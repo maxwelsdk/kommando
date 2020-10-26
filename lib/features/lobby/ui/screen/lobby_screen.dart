@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kommando/features/categoria/ui/states/categoria_states.dart';
 import 'package:kommando/features/categoria/ui/stores/categoria_store.dart';
+import 'package:kommando/features/lobby/ui/screen/lobby_detalhes_screen.dart';
 import 'package:kommando/features/lobby/ui/widgets/produto_widget.dart';
+import 'package:kommando/features/lobby/ui/widgets/resumo_pedido_widget.dart';
 import 'package:kommando/features/lobby/ui/widgets/top_option_categoria_widget.dart';
 import 'package:kommando/features/produto/ui/stores/produto_store.dart';
 import 'package:provider/provider.dart';
@@ -44,9 +46,22 @@ class _LobbyScreenState extends State<LobbyScreen> {
         ),
         actions: [
           Center(
-            child: Text(
-              "Detalhes",
-              style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          LobbyDetalhesScreen(lobbyId: widget.lobbyId),
+                    ));
+              },
+              child: Text(
+                "Detalhes",
+                style: TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ),
           SizedBox(
@@ -155,10 +170,7 @@ class _LobbyScreenState extends State<LobbyScreen> {
               },
             ),
           ),
-          Container(
-            height: 80,
-            color: Theme.of(context).primaryColor,
-          )
+          ResumoPedidoWidget()
         ],
       ),
     );
