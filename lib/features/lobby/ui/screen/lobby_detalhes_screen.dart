@@ -15,6 +15,26 @@ class LobbyDetalhesScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(lobbyId),
       ),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            heroTag: Key("mini"),
+            mini: true,
+            backgroundColor: Theme.of(context).primaryColor,
+            child: Icon(Icons.person),
+            onPressed: () {},
+          ),
+          FloatingActionButton(
+            heroTag: Key("main"),
+            backgroundColor: Theme.of(context).primaryColor,
+            onPressed: () {},
+            child: Icon(
+              Icons.note_add,
+            ),
+          ),
+        ],
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

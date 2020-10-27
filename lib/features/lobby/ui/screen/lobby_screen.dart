@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kommando/features/categoria/ui/states/categoria_states.dart';
 import 'package:kommando/features/categoria/ui/stores/categoria_store.dart';
+import 'package:kommando/features/item/ui/screen/item_detalhes_screen.dart';
 import 'package:kommando/features/lobby/ui/screen/lobby_detalhes_screen.dart';
 import 'package:kommando/features/lobby/ui/widgets/produto_widget.dart';
 import 'package:kommando/features/lobby/ui/widgets/resumo_pedido_widget.dart';
@@ -138,9 +139,23 @@ class _LobbyScreenState extends State<LobbyScreen> {
                         for (var item in categoria.itens) {
                           final produto =
                               await _produtoStore.getProduto(id: item);
-                          children.add(ProdutoWidget(
-                            produto: produto,
-                          ));
+                          children.add(
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ItemDetalhesScreen(
+                                      produto: produto,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: ProdutoWidget(
+                                produto: produto,
+                              ),
+                            ),
+                          );
                           children.add(Divider());
                         }
                       }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:kommando/features/item/ui/screen/item_screen.dart';
+import 'package:kommando/features/item/ui/screen/my_item_screen.dart';
 
 class ResumoPedidoWidget extends StatelessWidget {
   const ResumoPedidoWidget({
@@ -52,7 +52,7 @@ class ResumoPedidoWidget extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ItemScreen(),
+                    builder: (context) => MyItemScreen(),
                   ));
             },
             child: Text(

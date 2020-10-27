@@ -12,6 +12,7 @@ class PedidoDesconhecidoWidget extends StatelessWidget {
         minHeight: 70,
       ),
       child: Card(
+        elevation: 3,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
             Radius.circular(5),
