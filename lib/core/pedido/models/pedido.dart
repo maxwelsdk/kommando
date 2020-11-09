@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:kommando/core/item/models/item.dart';
 
 class Pedido {
@@ -6,7 +7,12 @@ class Pedido {
   String consumidorId;
   List<Item> items;
 
-  Pedido({this.id, this.lobbyId, this.consumidorId, this.items});
+  Pedido({
+    this.id,
+    @required this.lobbyId,
+    @required this.consumidorId,
+    this.items,
+  });
 
   Pedido.fromJson(Map<String, dynamic> json) {
     id = json['id'];

@@ -6,11 +6,23 @@ import 'package:kommando/features/item/ui/widgets/botao_pedir_widget.dart';
 import 'package:kommando/features/item/ui/widgets/controle_quantidade_widget.dart';
 import 'package:kommando/features/lobby/ui/widgets/produto_widget.dart';
 
-class ItemDetalhesScreen extends StatelessWidget {
+class ItemDetalhesScreen extends StatefulWidget {
   final Produto produto;
-  final MyItemStore _myItemStore = MyItemStore();
 
   ItemDetalhesScreen({Key key, this.produto}) : super(key: key);
+
+  @override
+  _ItemDetalhesScreenState createState() => _ItemDetalhesScreenState();
+}
+
+class _ItemDetalhesScreenState extends State<ItemDetalhesScreen> {
+  final MyItemStore _myItemStore = MyItemStore();
+
+  @override
+  void initState() {
+    _myItemStore.item.produtoId = widget.produto.id;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +48,7 @@ class ItemDetalhesScreen extends StatelessWidget {
                   ),
                 ),
                 ProdutoWidget(
-                  produto: produto,
+                  produto: widget.produto,
                 ),
                 Divider(
                   thickness: 1,
@@ -47,7 +59,7 @@ class ItemDetalhesScreen extends StatelessWidget {
                 AdicionarMaisItensWidget(),
                 BotaoPedirWidget(
                   myItemStore: _myItemStore,
-                  preco: produto.preco,
+                  preco: widget.produto.preco,
                 )
               ],
             ),

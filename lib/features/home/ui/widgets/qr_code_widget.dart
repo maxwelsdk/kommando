@@ -31,21 +31,20 @@ class QrCodeWidgetButton extends StatelessWidget {
               final result = await FlutterBarcodeScanner.scanBarcode(
                       "#ff6666", "Cancelar", true, ScanMode.QR)
                   .catchError((onError) => print("Error: $onError"));
-              await _lobbyStore.findLobbyById(id: result).then((value) {
+              await _lobbyStore.findLobbyById(id: result).then((value) async {
                 var state = _lobbyStore.state;
+                var consumidorState = _consumidorStore.state;
                 if (state is LobbyConnectedState) {
-                  var consumidorState = _consumidorStore.state;
-
-                  _consumidorStore.pushConsumidor(
+                  await _consumidorStore.pushConsumidor(
                       consumidor: Consumidor(
                     lobbyId: state.lobby.id,
                     uid: FirebaseAuth.instance.currentUser.uid,
-                  ));
-
-                  if (consumidorState is ConsumidorCreatedState) {
-                    Navigator.pushNamed(context, Routes.lobby,
-                        arguments: state.lobby.id);
-                  }
+                  )).then((value) {
+                    if (consumidorState is ConsumidorCreatedState) {
+                      Navigator.pushNamed(context, Routes.lobby,
+                          arguments: state.lobby.id);
+                    }
+                  });
                 }
               });
             }

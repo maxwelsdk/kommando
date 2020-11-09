@@ -25,7 +25,7 @@ abstract class _ConsumidorStore with Store {
       setState(ConsumidorErrorState(_responseConsumidor.message));
     }
     if (_responseConsumidor is Consumidor) {
-      setState(ConsumidorCreatedState());
+      setState(ConsumidorCreatedState(_responseConsumidor));
     }
   }
 }
