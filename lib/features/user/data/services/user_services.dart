@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:kommando/core/api/api_services.dart';
 import 'package:kommando/core/api/message.dart';
-import 'package:kommando/core/error/error.dart';
 import 'package:kommando/features/user/data/i_user.dart';
 import 'package:http/http.dart';
 import 'package:kommando/features/user/data/models/app_user.dart';
@@ -19,7 +18,7 @@ class UserServices implements IUser {
         return AppUser.fromJson(
             jsonDecode(utf8.decode(_response.bodyBytes))['user']);
       default:
-        return ApiError(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
+        return Message(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
     }
   }
 
@@ -35,7 +34,7 @@ class UserServices implements IUser {
         });
         return usersList;
       default:
-        return ApiError(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
+        return Message(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
     }
   }
 
@@ -48,7 +47,7 @@ class UserServices implements IUser {
         return AppUser.fromJson(
             jsonDecode(utf8.decode(_response.bodyBytes))['user']);
       default:
-        return ApiError(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
+        return Message(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
     }
   }
 
@@ -59,7 +58,7 @@ class UserServices implements IUser {
       case HttpStatus.ok:
         return Message(jsonDecode(utf8.decode(_response.bodyBytes))['id']);
       default:
-        return ApiError(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
+        return Message(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
     }
   }
 }

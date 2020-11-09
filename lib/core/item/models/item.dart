@@ -1,11 +1,16 @@
-class Item {
+import 'package:mobx/mobx.dart';
+part 'item.g.dart';
+class Item = _Item with _$Item;
+
+abstract class _Item with Store {
   String id;
   String produtoId;
+  @observable
   int quantidade;
 
-  Item({this.id, this.produtoId, this.quantidade});
+  _Item({this.id, this.produtoId, this.quantidade = 1});
 
-  Item.fromJson(Map<String, dynamic> json) {
+  _Item.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     produtoId = json['produtoId'];
     quantidade = json['quantidade'];

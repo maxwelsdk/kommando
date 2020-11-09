@@ -8,7 +8,6 @@ import 'package:kommando/features/lobby/ui/widgets/produto_widget.dart';
 import 'package:kommando/features/lobby/ui/widgets/resumo_pedido_widget.dart';
 import 'package:kommando/features/lobby/ui/widgets/top_option_categoria_widget.dart';
 import 'package:kommando/features/produto/ui/stores/produto_store.dart';
-import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class LobbyScreen extends StatefulWidget {

@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:kommando/core/api/api_services.dart';
 import 'package:kommando/core/api/message.dart';
-import 'package:kommando/core/error/error.dart';
 import 'package:kommando/core/item/models/item.dart';
 import 'package:kommando/features/item/data/i_item.dart';
 import 'package:http/http.dart';
@@ -19,7 +18,7 @@ class ItemServices implements IItem {
         return Message(jsonDecode(utf8.decode(_response.bodyBytes))['id']);
         break;
       default:
-        return ApiError(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
+        return Message(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
     }
   }
 
@@ -32,7 +31,7 @@ class ItemServices implements IItem {
         return Item.fromJson(json);
         break;
       default:
-        return ApiError(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
+        return Message(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
     }
   }
 
@@ -49,7 +48,7 @@ class ItemServices implements IItem {
         return itens;
         break;
       default:
-        return ApiError(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
+        return Message(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
     }
   }
 
@@ -63,7 +62,7 @@ class ItemServices implements IItem {
             jsonDecode(utf8.decode(_response.bodyBytes))['item']);
         break;
       default:
-        return ApiError(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
+        return Message(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
     }
   }
 }

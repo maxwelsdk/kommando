@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:http/http.dart';
 import 'package:kommando/core/api/api_services.dart';
 import 'package:kommando/core/api/message.dart';
-import 'package:kommando/core/error/error.dart';
 import 'package:kommando/core/produto/models/produto.dart';
 import 'package:kommando/features/produto/data/i_produto.dart';
 
@@ -19,7 +18,7 @@ class ProdutoServices implements IProduto {
         return Message(jsonDecode(utf8.decode(_response.bodyBytes))['id']);
         break;
       default:
-        return ApiError(jsonDecode(utf8.decode(_response.bodyBytes)));
+        return Message(jsonDecode(utf8.decode(_response.bodyBytes)));
     }
   }
 
@@ -66,7 +65,7 @@ class ProdutoServices implements IProduto {
             jsonDecode(utf8.decode(_response.bodyBytes))['produto']);
         break;
       default:
-        return ApiError(jsonDecode(utf8.decode(_response.bodyBytes)));
+        return Message(jsonDecode(utf8.decode(_response.bodyBytes)));
         break;
     }
   }
@@ -81,7 +80,7 @@ class ProdutoServices implements IProduto {
             jsonDecode(utf8.decode(_response.bodyBytes))['produto']);
         break;
       default:
-        return ApiError(jsonDecode(utf8.decode(_response.bodyBytes)));
+        return Message(jsonDecode(utf8.decode(_response.bodyBytes)));
         break;
     }
   }

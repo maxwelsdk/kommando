@@ -55,7 +55,7 @@ class LobbyServices implements ILobby {
           break;
       }
     } catch (e) {
-      return Message(e.message);
+      return Message(e.toString());
     }
   }
 

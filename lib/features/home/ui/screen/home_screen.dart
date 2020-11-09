@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kommando/core/ui/linear_background_widget.dart';
+import 'package:kommando/features/consumidor/ui/states/consumidor_states.dart';
+import 'package:kommando/features/consumidor/ui/stores/consumidor_store.dart';
 import 'package:kommando/features/drawer/ui/widgets/drawer_widget.dart';
-import 'package:kommando/features/home/ui/states/home_states.dart';
-import 'package:kommando/features/home/ui/stores/home_store.dart';
 import 'package:kommando/features/home/ui/widgets/qr_code_widget.dart';
+import 'package:kommando/features/lobby/ui/states/lobby_states.dart';
+import 'package:kommando/features/lobby/ui/stores/lobby_store.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final _homeStore = Provider.of<HomeStore>(context);
+    final _lobbyStore = Provider.of<LobbyStore>(context);
+    final _consumidorStore = Provider.of<ConsumidorStore>(context);
     return Scaffold(
       drawer: MyDrawer(),
       body: Container(
@@ -65,10 +68,17 @@ class HomeScreen extends StatelessWidget {
                 ),
                 Observer(
                   builder: (context) {
-                    var state = _homeStore.state;
-                    if (state is HomeNotFoundState) {
+                    var lobbyState = _lobbyStore.state;
+                    var consumidorState = _consumidorStore.state;
+                    if (consumidorState is ConsumidorErrorState) {
                       return Text(
-                        state.message,
+                        consumidorState.message,
+                        style: TextStyle(color: Colors.white),
+                      );
+                    }
+                    if (lobbyState is LobbyNotFoundState) {
+                      return Text(
+                        lobbyState.message,
                         style: TextStyle(color: Colors.white),
                       );
                     }

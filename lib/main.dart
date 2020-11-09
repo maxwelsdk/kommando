@@ -1,12 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:kommando/features/consumidor/ui/stores/consumidor_store.dart';
 import 'package:kommando/features/home/ui/screen/home_screen.dart';
-import 'package:kommando/features/home/ui/stores/home_store.dart';
 import 'package:kommando/features/login/ui/screen/login_screen.dart';
 import 'package:kommando/features/login/ui/stores/login_store.dart';
 import 'package:kommando/features/routes/routes.dart';
 import 'package:provider/provider.dart';
+
+import 'features/lobby/ui/stores/lobby_store.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,7 +19,10 @@ void main() {
           create: (context) => LoginStore(),
         ),
         Provider(
-          create: (context) => HomeStore(),
+          create: (context) => LobbyStore(),
+        ),
+        Provider(
+          create: (context) => ConsumidorStore(),
         ),
       ],
       child: MyApp(),

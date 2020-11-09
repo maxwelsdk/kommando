@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'home_store.dart';
+part of 'pedido_store.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,32 +8,32 @@ part of 'home_store.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
-mixin _$HomeStore on _HomeStore, Store {
-  final _$stateAtom = Atom(name: '_HomeStore.state');
+mixin _$PedidoStore on _PedidoStore, Store {
+  final _$stateAtom = Atom(name: '_PedidoStore.state');
 
   @override
-  HomeState get state {
+  PedidoState get state {
     _$stateAtom.reportRead();
     return super.state;
   }
 
   @override
-  set state(HomeState value) {
+  set state(PedidoState value) {
     _$stateAtom.reportWrite(value, super.state, () {
       super.state = value;
     });
   }
 
-  final _$_HomeStoreActionController = ActionController(name: '_HomeStore');
+  final _$_PedidoStoreActionController = ActionController(name: '_PedidoStore');
 
   @override
-  HomeState setState(HomeState value) {
-    final _$actionInfo =
-        _$_HomeStoreActionController.startAction(name: '_HomeStore.setState');
+  PedidoState setState(PedidoState value) {
+    final _$actionInfo = _$_PedidoStoreActionController.startAction(
+        name: '_PedidoStore.setState');
     try {
       return super.setState(value);
     } finally {
-      _$_HomeStoreActionController.endAction(_$actionInfo);
+      _$_PedidoStoreActionController.endAction(_$actionInfo);
     }
   }
 

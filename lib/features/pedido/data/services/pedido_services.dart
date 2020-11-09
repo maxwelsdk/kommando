@@ -4,9 +4,9 @@ import 'package:http/http.dart';
 import 'package:kommando/core/api/api_services.dart';
 import 'package:kommando/core/api/message.dart';
 
-import 'package:kommando/core/error/error.dart';
 import 'package:kommando/core/pedido/models/pedido.dart';
 import 'package:kommando/features/pedido/data/i_pedido.dart';
+
 
 class PedidoServices implements IPedido {
   final ApiServices _apiServices = ApiServices();
@@ -19,7 +19,7 @@ class PedidoServices implements IPedido {
         return Message(jsonDecode(utf8.decode(_response.bodyBytes))['id']);
         break;
       default:
-        return ApiError(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
+        return Message(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
     }
   }
 
@@ -31,7 +31,7 @@ class PedidoServices implements IPedido {
         return Pedido.fromJson(jsonDecode(utf8.decode(_response.bodyBytes))['pedido']);
         break;
       default:
-        return ApiError(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
+        return Message(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
     }
   }
 
@@ -48,7 +48,7 @@ class PedidoServices implements IPedido {
         return pedidos;
         break;
       default:
-        return ApiError(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
+        return Message(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
     }
   }
 
@@ -62,7 +62,7 @@ class PedidoServices implements IPedido {
             jsonDecode(utf8.decode(_response.bodyBytes))['pedido']);
         break;
       default:
-        return ApiError(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
+        return Message(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
         break;
     }
   }
@@ -77,7 +77,7 @@ class PedidoServices implements IPedido {
             jsonDecode(utf8.decode(_response.bodyBytes))['pedido']);
         break;
       default:
-        return ApiError(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
+        return Message(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
         break;
     }
   }
