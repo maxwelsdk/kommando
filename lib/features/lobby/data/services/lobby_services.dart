@@ -42,14 +42,20 @@ class LobbyServices implements ILobby {
 
   @override
   Future fetchLobby({String id}) async {
-    final _response = await _services.get(uri: "/lobbies/$id");
-    switch (_response.statusCode) {
-      case HttpStatus.ok:
-        return Lobby.fromJson(jsonDecode(utf8.decode(_response.bodyBytes))["lobby"]);
-        break;
-      default:
-        return Message(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
-        break;
+    try {
+      final _response = await _services.get(uri: "/lobbies/$id");
+      switch (_response.statusCode) {
+        case HttpStatus.ok:
+          return Lobby.fromJson(
+              jsonDecode(utf8.decode(_response.bodyBytes))["lobby"]);
+          break;
+        default:
+          return Message(
+              jsonDecode(utf8.decode(_response.bodyBytes))['message']);
+          break;
+      }
+    } catch (e) {
+      return Message(e.message);
     }
   }
 

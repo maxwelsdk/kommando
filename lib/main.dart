@@ -1,14 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:kommando/features/categoria/ui/stores/categoria_store.dart';
 import 'package:kommando/features/home/ui/screen/home_screen.dart';
 import 'package:kommando/features/home/ui/stores/home_store.dart';
 import 'package:kommando/features/login/ui/screen/login_screen.dart';
 import 'package:kommando/features/login/ui/stores/login_store.dart';
-import 'package:kommando/features/produto/ui/stores/produto_store.dart';
 import 'package:kommando/features/routes/routes.dart';
-import 'package:kommando/features/signup/ui/stores/signup_store.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -20,17 +17,8 @@ void main() {
           create: (context) => LoginStore(),
         ),
         Provider(
-          create: (context) => SignupStore(),
-        ),
-        Provider(
           create: (context) => HomeStore(),
         ),
-        Provider(
-          create: (context) => CategoriaStore(),
-        ),
-        Provider(
-          create: (context) => ProdutoStore(),
-        )
       ],
       child: MyApp(),
     ),

@@ -24,20 +24,20 @@ class _LobbyScreenState extends State<LobbyScreen> {
   final ItemScrollController itemScrollController = ItemScrollController();
   final ItemPositionsListener itemPositionsListener =
       ItemPositionsListener.create();
+  CategoriaStore _categoriaStore = CategoriaStore();
   int selectedItem = 0;
 
   @override
   void initState() {
     Future.delayed(Duration.zero, () async {
-      await Provider.of<CategoriaStore>(context, listen: false).getCategorias();
+      await _categoriaStore.getCategorias();
     });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final _categoriaStore = Provider.of<CategoriaStore>(context);
-    final _produtoStore = Provider.of<ProdutoStore>(context);
+    final _produtoStore = ProdutoStore();
     final Map map = Map<String, int>();
 
     return Scaffold(

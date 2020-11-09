@@ -19,11 +19,12 @@ class ApiServices {
   Future<http.Response> get({String uri}) async {
     final http.Response _response = await http
         .get("${Api.url}$uri", headers: defaultHeaders)
-        .catchError((onError) => print(onError))
-        .timeout(
-          Duration(seconds: 120),
-          onTimeout: () => throw Exception("Servidor não encontrado"),
-        );
+        .catchError((onError) {
+      throw Exception(onError);
+    }).timeout(
+      Duration(seconds: 5),
+      onTimeout: () => throw Exception("Servidor não encontrado"),
+    );
     return _response;
   }
 

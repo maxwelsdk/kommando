@@ -5,7 +5,6 @@ import 'package:kommando/features/signup/ui/screen/widgets/user_data_widget.dart
 import 'package:kommando/features/signup/ui/states/signup_states.dart';
 import 'package:kommando/features/signup/ui/stores/signup_store.dart';
 import 'package:kommando/features/user/data/models/app_user.dart';
-import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatelessWidget {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -28,9 +27,10 @@ class SignUpScreen extends StatelessWidget {
 
   final AppUser _personalData = AppUser();
 
+  final store = SignupStore();
+
   @override
   Widget build(BuildContext context) {
-    final store = Provider.of<SignupStore>(context);
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(),

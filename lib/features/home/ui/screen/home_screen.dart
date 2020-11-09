@@ -5,7 +5,6 @@ import 'package:kommando/features/drawer/ui/widgets/drawer_widget.dart';
 import 'package:kommando/features/home/ui/states/home_states.dart';
 import 'package:kommando/features/home/ui/stores/home_store.dart';
 import 'package:kommando/features/home/ui/widgets/qr_code_widget.dart';
-import 'package:kommando/features/routes/routes.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
