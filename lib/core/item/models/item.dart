@@ -1,5 +1,7 @@
 import 'package:mobx/mobx.dart';
+
 part 'item.g.dart';
+
 class Item = _Item with _$Item;
 
 abstract class _Item with Store {

@@ -18,7 +18,7 @@ abstract class _ConsumidorStore with Store {
   ConsumidorState setState(ConsumidorState value) => this.state = value;
 
 
-  Future<void> pushConsumidor({Consumidor consumidor}) async {
+  Future<ConsumidorState> pushConsumidor({Consumidor consumidor}) async {
     final _responseConsumidor = await _consumidorServices.pushConsumidor(
         consumidor: consumidor);
     if (_responseConsumidor is Message) {
@@ -27,5 +27,6 @@ abstract class _ConsumidorStore with Store {
     if (_responseConsumidor is Consumidor) {
       setState(ConsumidorCreatedState(_responseConsumidor));
     }
+    return state;
   }
 }

@@ -1,5 +1,3 @@
-import 'package:kommando/core/consumidor/data/models/consumidor.dart';
-
 class Lobby {
   String id;
   String descricao;
@@ -26,8 +24,7 @@ class Lobby {
     data['descricao'] = this.descricao;
     data['lobbyStatus'] = this.lobbyStatus;
     if (this.consumidorList != null) {
-      data['consumidorList'] =
-          this.consumidorList.map((v) => v).toList();
+      data['consumidorList'] = this.consumidorList.map((v) => v).toList();
     }
     return data;
   }

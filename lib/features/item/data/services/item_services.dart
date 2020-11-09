@@ -53,9 +53,9 @@ class ItemServices implements IItem {
   }
 
   @override
-  Future pushItem({Item item}) async {
+  Future pushItem({String pedidoId, Item item}) async {
     final Response _response =
-        await _apiServices.post(uri: "/itens", body: item);
+        await _apiServices.post(uri: "/itens/$pedidoId", body: item);
     switch (_response.statusCode) {
       case HttpStatus.created:
         return Item.fromJson(

@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kommando/core/api/api.dart';
-import 'package:kommando/core/item/models/item.dart';
 import 'package:kommando/core/pedido/models/pedido.dart';
 import 'package:kommando/features/pedido/data/services/pedido_services.dart';
 
@@ -30,7 +29,7 @@ void main() {
         .pushPedido(
             pedido: Pedido(
                 consumidorId: "5f89f7846062c450e888503c",
-                items: [Item(id: "1", quantidade: 1, produtoId: "1")],
+                items: ["1"],
                 lobbyId: "5f62b57ef8cbe73384c84aa0"))
         .then((value) {
       expect(value.id, isNotEmpty);

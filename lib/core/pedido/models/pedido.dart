@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
-import 'package:kommando/core/item/models/item.dart';
 
 class Pedido {
   String id;
   String lobbyId;
   String consumidorId;
-  List<Item> items;
+  List<String> items;
 
   Pedido({
     this.id,
@@ -19,9 +18,9 @@ class Pedido {
     lobbyId = json['lobbyId'];
     consumidorId = json['consumidorId'];
     if (json['items'] != null) {
-      items = new List<Item>();
+      items = new List<String>();
       json['items'].forEach((v) {
-        items.add(new Item.fromJson(v));
+        items.add(v);
       });
     }
   }
@@ -32,7 +31,7 @@ class Pedido {
     data['lobbyId'] = this.lobbyId;
     data['consumidorId'] = this.consumidorId;
     if (this.items != null) {
-      data['items'] = this.items.map((v) => v.toJson()).toList();
+      data['items'] = this.items.map((v) => v).toList();
     }
     return data;
   }

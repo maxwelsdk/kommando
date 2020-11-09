@@ -29,24 +29,28 @@ class QrCodeWidgetButton extends StatelessWidget {
             if (value.isDenied || value.isPermanentlyDenied) openAppSettings();
             if (value.isGranted) {
               final result = await FlutterBarcodeScanner.scanBarcode(
-                      "#ff6666", "Cancelar", true, ScanMode.QR)
-                  .catchError((onError) => print("Error: $onError"));
-              await _lobbyStore.findLobbyById(id: result).then((value) async {
-                var state = _lobbyStore.state;
-                var consumidorState = _consumidorStore.state;
-                if (state is LobbyConnectedState) {
-                  await _consumidorStore.pushConsumidor(
-                      consumidor: Consumidor(
-                    lobbyId: state.lobby.id,
-                    uid: FirebaseAuth.instance.currentUser.uid,
-                  )).then((value) {
-                    if (consumidorState is ConsumidorCreatedState) {
-                      Navigator.pushNamed(context, Routes.lobby,
-                          arguments: state.lobby.id);
-                    }
-                  });
-                }
-              });
+                "#ff6666",
+                "Cancelar",
+                true,
+                ScanMode.QR,
+              ).catchError((onError) => print("Error: $onError"));
+
+              await _lobbyStore.findLobbyById(id: result);
+              var state = _lobbyStore.state;
+              if (state is LobbyConnectedState) {
+                await _consumidorStore
+                    .pushConsumidor(
+                        consumidor: Consumidor(
+                  lobbyId: state.lobby.id,
+                  uid: FirebaseAuth.instance.currentUser.uid,
+                ))
+                    .then((value) {
+                  if (value is ConsumidorCreatedState) {
+                    Navigator.pushNamed(context, Routes.lobby,
+                        arguments: state.lobby.id);
+                  }
+                });
+              }
             }
           });
         },

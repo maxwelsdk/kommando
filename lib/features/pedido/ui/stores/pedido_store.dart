@@ -17,15 +17,15 @@ abstract class _PedidoStore with Store {
   @action
   PedidoState setState(PedidoState value) => this.state = value;
 
-  Future<void> pushPedido({Pedido pedido}) async {
+  Future<PedidoState> pushPedido({Pedido pedido}) async {
     setState(PedidoPushingState());
     final _responsePedido = await _pedidoServices.pushPedido(pedido: pedido);
     if (_responsePedido is Message) {
       setState(PedidoErrorState(_responsePedido.message));
     }
-    if (_pedidoServices is Pedido) {
-      setState(PedidoSucessState());
+    if (_responsePedido is Pedido) {
+      setState(PedidoSucessState(_responsePedido));
     }
+    return state;
   }
-
 }

@@ -51,6 +51,8 @@ dependencies:
 
   scrollable_positioned_list: ^0.1.8
 
+  http: ^0.12.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -3,19 +3,19 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kommando/core/pedido/models/pedido.dart';
 import 'package:kommando/features/consumidor/ui/states/consumidor_states.dart';
 import 'package:kommando/features/consumidor/ui/stores/consumidor_store.dart';
+import 'package:kommando/features/item/ui/states/item_states.dart';
 import 'package:kommando/features/item/ui/stores/my_item_store.dart';
-import 'package:kommando/features/lobby/ui/states/lobby_states.dart';
-import 'package:kommando/features/lobby/ui/stores/lobby_store.dart';
 import 'package:kommando/features/pedido/ui/states/pedido_states.dart';
 import 'package:kommando/features/pedido/ui/stores/pedido_store.dart';
 import 'package:kommando/utils/money_utils.dart';
 import 'package:provider/provider.dart';
 
 class BotaoPedirWidget extends StatelessWidget {
+  final PedidoStore _pedidoStore = PedidoStore();
   final MyItemStore myItemStore;
   final double preco;
 
-  const BotaoPedirWidget({
+  BotaoPedirWidget({
     Key key,
     this.myItemStore,
     this.preco,
@@ -23,20 +23,21 @@ class BotaoPedirWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final PedidoStore _pedidoStore = PedidoStore();
-    final LobbyStore _lobbyStore = Provider.of<LobbyStore>(context);
-    final ConsumidorStore _consumidorStore =
-        Provider.of<ConsumidorStore>(context);
+    final _consumidorStore = Provider.of<ConsumidorStore>(context);
 
     return Observer(
       builder: (context) {
-        var state = _pedidoStore.state;
-        if (state is PedidoPushingState) {
-          return CircularProgressIndicator();
-        }
-        if (state is PedidoSucessState) {
+        var consumidorState = _consumidorStore.state;
+        var itemState = myItemStore.state;
+        print(itemState);
+        if (itemState is ItemCreatedState) {
+          Navigator.of(context).pop();
           return Text("Pedido enviado!");
         }
+        if (itemState is ItemPushingState) {
+          return CircularProgressIndicator();
+        }
+
         return Container(
           height: MediaQuery.of(context).size.height * 0.15,
           width: double.infinity,
@@ -46,14 +47,25 @@ class BotaoPedirWidget extends StatelessWidget {
           ),
           child: FlatButton(
             onPressed: () async {
-              var state = _lobbyStore.state as LobbyConnectedState;
-              var consumidorState =
-                  _consumidorStore.state as ConsumidorCreatedState;
-              final pedido = Pedido(
-                  lobbyId: state.lobby.id,
-                  consumidorId: consumidorState.consumidor.id,
-                  items: [myItemStore.item]);
-              await _pedidoStore.pushPedido(pedido: pedido);
+              if (consumidorState is ConsumidorCreatedState) {
+                await _pedidoStore
+                    .pushPedido(
+                  pedido: Pedido(
+                    consumidorId: consumidorState.consumidor.id,
+                    lobbyId: consumidorState.consumidor.lobbyId,
+                  ),
+                )
+                    .then((value) async {
+                  if (value is PedidoSucessState) {
+                    if (value.pedido.id != null || value.pedido.id.isNotEmpty) {
+                      final pedido = value.pedido;
+                      pedido.items.add(myItemStore.item.id);
+                      await myItemStore.pushItem(
+                          pedidoId: value.pedido.id, item: myItemStore.item);
+                    }
+                  }
+                });
+              }
             },
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -66,21 +78,23 @@ class BotaoPedirWidget extends StatelessWidget {
                     fontSize: 24,
                   ),
                 ),
-                Observer(builder: (context) {
-                  double value = myItemStore.item.quantidade * preco;
-                  return Text(
-                    "R\$${MoneyUtils.parseDoubleToMoneyText(value)}",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 26,
-                    ),
-                  );
-                })
+                Observer(
+                  builder: (context) {
+                    double value = myItemStore.item.quantidade * preco;
+                    return Text(
+                      "R\$${MoneyUtils.parseDoubleToMoneyText(value)}",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 26,
+                      ),
+                    );
+                  },
+                )
               ],
             ),
           ),
         );
-      }
+      },
     );
   }
 }
