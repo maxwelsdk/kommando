@@ -1,5 +1,6 @@
 import 'package:kommando/core/api/message.dart';
 import 'package:kommando/core/item/models/item.dart';
+import 'package:kommando/features/item/data/models/item_dto.dart';
 import 'package:kommando/features/item/data/services/item_services.dart';
 import 'package:kommando/features/item/ui/states/item_states.dart';
 import 'package:mobx/mobx.dart';
@@ -22,6 +23,9 @@ abstract class _MyItemStore with Store {
 
   @observable
   ObservableList<Item> itens = ObservableList();
+
+  @observable
+  ObservableList<ItemDTO> pedidos = ObservableList();
 
   @action
   minusQuantidade() {

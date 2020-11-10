@@ -39,6 +39,36 @@ mixin _$MyItemStore on _MyItemStore, Store {
     });
   }
 
+  final _$itensAtom = Atom(name: '_MyItemStore.itens');
+
+  @override
+  ObservableList<Item> get itens {
+    _$itensAtom.reportRead();
+    return super.itens;
+  }
+
+  @override
+  set itens(ObservableList<Item> value) {
+    _$itensAtom.reportWrite(value, super.itens, () {
+      super.itens = value;
+    });
+  }
+
+  final _$pedidosAtom = Atom(name: '_MyItemStore.pedidos');
+
+  @override
+  ObservableList<ItemDTO> get pedidos {
+    _$pedidosAtom.reportRead();
+    return super.pedidos;
+  }
+
+  @override
+  set pedidos(ObservableList<ItemDTO> value) {
+    _$pedidosAtom.reportWrite(value, super.pedidos, () {
+      super.pedidos = value;
+    });
+  }
+
   final _$_MyItemStoreActionController = ActionController(name: '_MyItemStore');
 
   @override
@@ -78,7 +108,9 @@ mixin _$MyItemStore on _MyItemStore, Store {
   String toString() {
     return '''
 state: ${state},
-item: ${item}
+item: ${item},
+itens: ${itens},
+pedidos: ${pedidos}
     ''';
   }
 }
