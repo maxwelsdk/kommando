@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:kommando/features/item/ui/screen/my_item_screen.dart';
 import 'package:kommando/features/item/ui/stores/my_item_store.dart';
+import 'package:kommando/utils/money_utils.dart';
 import 'package:provider/provider.dart';
 
 class ResumoPedidoWidget extends StatelessWidget {
@@ -67,10 +68,11 @@ class ResumoPedidoWidget extends StatelessWidget {
               style: TextStyle(color: Colors.white),
             ),
           ),
-          Text(
-            "R\$ 29,00",
-            style: TextStyle(fontSize: 24, color: Colors.white),
-          )
+          Observer(
+              builder: (context) => Text(
+                    "R\$${MoneyUtils.parseDoubleToMoneyText(_myItemStore.getTotalAcumuladoPedido())}",
+                    style: TextStyle(fontSize: 24, color: Colors.white),
+                  ))
         ],
       ),
     );

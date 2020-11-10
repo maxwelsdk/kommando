@@ -23,6 +23,7 @@ class _MyItemScreenState extends State<MyItemScreen> {
     _future = Future.delayed(Duration.zero, () async {
       final MyItemStore _myItemStore =
           Provider.of<MyItemStore>(context, listen: false);
+      _myItemStore.pedidos.clear();
       for (var element in _myItemStore.itens) {
         await ProdutoServices()
             .fetchProduto(id: element.produtoId)
@@ -45,58 +46,58 @@ class _MyItemScreenState extends State<MyItemScreen> {
   Widget build(BuildContext context) {
     final MyItemStore _myItemStore = Provider.of<MyItemStore>(context);
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Meus itens"),
-        ),
-        body: FutureBuilder(
-            future: _future,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState != ConnectionState.done)
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TituloSecaoWidget(
-                    child: Text("Pedidos pendentes"),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 8.0, horizontal: 16),
-                    child: Column(
-                      children: _myItemStore.pedidos
-                          .map((e) => PedidoDesconhecidoWidget(
-                                pedido: e,
-                              ))
-                          .toList(),
-                    ),
-                  ),
-                  TituloSecaoWidget(
-                    child: Text("Total acumulado"),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 8.0, horizontal: 16),
-                    child: Observer(
-                      builder: (context) {
-                        double total = 0.0;
-                        _myItemStore.pedidos.forEach((element) {
-                          if (element.checked) {
-                            total += element.quantidade * element.preco;
-                          }
-                        });
-                        return TotalAcumuladoWidget(
-                          total: total,
-                        );
-                      }
-                    ),
-                  ),
-                  TituloSecaoWidget(
-                    child: Text("Pedidos realizados"),
-                  ),
-                ],
+      appBar: AppBar(
+        title: Text("Meus itens"),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).primaryColor,
+        onPressed: () {
+          print("enviaaaa");
+        },
+        child: Icon(Icons.send),
+      ),
+      body: FutureBuilder(
+          future: _future,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState != ConnectionState.done)
+              return Center(
+                child: CircularProgressIndicator(),
               );
-            }));
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TituloSecaoWidget(
+                  child: Text("Pedidos pendentes"),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
+                  child: Column(
+                    children: _myItemStore.pedidos
+                        .map((e) => PedidoDesconhecidoWidget(
+                              pedido: e,
+                            ))
+                        .toList(),
+                  ),
+                ),
+                TituloSecaoWidget(
+                  child: Text("Total acumulado"),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
+                  child: Observer(builder: (context) {
+                    return TotalAcumuladoWidget(
+                      total: _myItemStore.getTotalAcumuladoPedido(),
+                    );
+                  }),
+                ),
+                TituloSecaoWidget(
+                  child: Text("Pedidos realizados"),
+                ),
+              ],
+            );
+          }),
+    );
   }
 }

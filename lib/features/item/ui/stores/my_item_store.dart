@@ -50,4 +50,14 @@ abstract class _MyItemStore with Store {
       setState(ItemCreatedState(_itemResponse));
     }
   }
+
+  double getTotalAcumuladoPedido() {
+    double total = 0.0;
+    this.pedidos.forEach((element) {
+      if (element.checked) {
+        total += element.quantidade * element.preco;
+      }
+    });
+    return total;
+  }
 }
