@@ -2,24 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:kommando/features/item/ui/stores/my_item_store.dart';
+import 'package:provider/provider.dart';
 
 class ControleQuantidadeWidget extends StatelessWidget {
-  final MyItemStore myItemStore;
-
   const ControleQuantidadeWidget({
     Key key,
-    this.myItemStore,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final MyItemStore _myItemStore = Provider.of<MyItemStore>(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Material(
           child: InkWell(
             onTap: () {
-              myItemStore.minusQuantidade();
+              _myItemStore.minusQuantidade();
             },
             child: SvgPicture.asset(
               'assets/minus.svg',
@@ -36,7 +35,7 @@ class ControleQuantidadeWidget extends StatelessWidget {
             ),
             child: Observer(
               builder: (context) => Text(
-                myItemStore.item.quantidade.toString(),
+                _myItemStore.item.quantidade.toString(),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -51,7 +50,7 @@ class ControleQuantidadeWidget extends StatelessWidget {
         Material(
           child: InkWell(
             onTap: () {
-              myItemStore.plusQuantidade();
+              _myItemStore.plusQuantidade();
             },
             child: SvgPicture.asset(
               'assets/plus.svg',

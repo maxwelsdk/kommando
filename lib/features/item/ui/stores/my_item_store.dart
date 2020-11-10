@@ -9,7 +9,6 @@ part 'my_item_store.g.dart';
 class MyItemStore = _MyItemStore with _$MyItemStore;
 
 abstract class _MyItemStore with Store {
-
   final ItemServices _itemServices = ItemServices();
 
   @observable
@@ -20,6 +19,9 @@ abstract class _MyItemStore with Store {
 
   @observable
   Item item = Item();
+
+  @observable
+  ObservableList<Item> itens = ObservableList();
 
   @action
   minusQuantidade() {
@@ -35,7 +37,8 @@ abstract class _MyItemStore with Store {
 
   Future<void> pushItem({String pedidoId, Item item}) async {
     setState(ItemPushingState());
-    final _itemResponse = await _itemServices.pushItem(pedidoId: pedidoId, item: item);
+    final _itemResponse =
+        await _itemServices.pushItem(pedidoId: pedidoId, item: item);
     if (_itemResponse is Message) {
       setState(ItemErrorState());
     }
@@ -43,5 +46,4 @@ abstract class _MyItemStore with Store {
       setState(ItemCreatedState(_itemResponse));
     }
   }
-
 }

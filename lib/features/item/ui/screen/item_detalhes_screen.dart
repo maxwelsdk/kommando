@@ -5,6 +5,7 @@ import 'package:kommando/features/item/ui/widgets/adicionar_mais_itens_widget.da
 import 'package:kommando/features/item/ui/widgets/botao_pedir_widget.dart';
 import 'package:kommando/features/item/ui/widgets/controle_quantidade_widget.dart';
 import 'package:kommando/features/lobby/ui/widgets/produto_widget.dart';
+import 'package:provider/provider.dart';
 
 class ItemDetalhesScreen extends StatefulWidget {
   final Produto produto;
@@ -16,17 +17,22 @@ class ItemDetalhesScreen extends StatefulWidget {
 }
 
 class _ItemDetalhesScreenState extends State<ItemDetalhesScreen> {
-  final MyItemStore _myItemStore = MyItemStore();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
   @override
   void initState() {
-    _myItemStore.item.produtoId = widget.produto.id;
+    Future.delayed(Duration.zero, () async {
+      final MyItemStore _myItemStore =
+          Provider.of<MyItemStore>(context, listen: false);
+      _myItemStore.item.produtoId = widget.produto.id;
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text("Detalhes do item"),
       ),
@@ -53,12 +59,11 @@ class _ItemDetalhesScreenState extends State<ItemDetalhesScreen> {
                 Divider(
                   thickness: 1,
                 ),
-                ControleQuantidadeWidget(
-                  myItemStore: _myItemStore,
+                ControleQuantidadeWidget(),
+                AdicionarMaisItensWidget(
+                  scaffoldKey: _scaffoldKey,
                 ),
-                AdicionarMaisItensWidget(),
                 BotaoPedirWidget(
-                  myItemStore: _myItemStore,
                   preco: widget.produto.preco,
                 )
               ],

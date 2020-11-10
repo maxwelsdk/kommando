@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:kommando/features/item/ui/screen/my_item_screen.dart';
+import 'package:kommando/features/item/ui/stores/my_item_store.dart';
+import 'package:provider/provider.dart';
 
 class ResumoPedidoWidget extends StatelessWidget {
   const ResumoPedidoWidget({
@@ -9,6 +12,8 @@ class ResumoPedidoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final MyItemStore _myItemStore = Provider.of<MyItemStore>(context);
+
     return Container(
       height: 80,
       color: Theme.of(context).primaryColor,
@@ -30,11 +35,13 @@ class ResumoPedidoWidget extends StatelessWidget {
                   height: 16,
                   width: 16,
                   child: Center(
-                    child: Text(
-                      "5",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 10,
+                    child: Observer(
+                      builder: (context) => Text(
+                        "${_myItemStore.itens.length ?? 0}",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                        ),
                       ),
                     ),
                   ),

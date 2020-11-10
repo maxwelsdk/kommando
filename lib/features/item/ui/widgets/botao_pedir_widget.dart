@@ -12,24 +12,22 @@ import 'package:provider/provider.dart';
 
 class BotaoPedirWidget extends StatelessWidget {
   final PedidoStore _pedidoStore = PedidoStore();
-  final MyItemStore myItemStore;
   final double preco;
 
   BotaoPedirWidget({
     Key key,
-    this.myItemStore,
     this.preco,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final _consumidorStore = Provider.of<ConsumidorStore>(context);
+    final MyItemStore _myItemStore = Provider.of<MyItemStore>(context);
 
     return Observer(
       builder: (context) {
         var consumidorState = _consumidorStore.state;
-        var itemState = myItemStore.state;
-        print(itemState);
+        var itemState = _myItemStore.state;
         if (itemState is ItemCreatedState) {
           Navigator.of(context).pop();
           return Text("Pedido enviado!");
@@ -59,9 +57,9 @@ class BotaoPedirWidget extends StatelessWidget {
                   if (value is PedidoSucessState) {
                     if (value.pedido.id != null || value.pedido.id.isNotEmpty) {
                       final pedido = value.pedido;
-                      pedido.items.add(myItemStore.item.id);
-                      await myItemStore.pushItem(
-                          pedidoId: value.pedido.id, item: myItemStore.item);
+                      pedido.items.add(_myItemStore.item.id);
+                      await _myItemStore.pushItem(
+                          pedidoId: value.pedido.id, item: _myItemStore.item);
                     }
                   }
                 });
@@ -80,7 +78,7 @@ class BotaoPedirWidget extends StatelessWidget {
                 ),
                 Observer(
                   builder: (context) {
-                    double value = myItemStore.item.quantidade * preco;
+                    double value = _myItemStore.item.quantidade * preco;
                     return Text(
                       "R\$${MoneyUtils.parseDoubleToMoneyText(value)}",
                       style: TextStyle(

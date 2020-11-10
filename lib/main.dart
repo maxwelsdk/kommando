@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:kommando/features/consumidor/ui/stores/consumidor_store.dart';
 import 'package:kommando/features/home/ui/screen/home_screen.dart';
+import 'package:kommando/features/item/ui/stores/my_item_store.dart';
 import 'package:kommando/features/login/ui/screen/login_screen.dart';
 import 'package:kommando/features/login/ui/stores/login_store.dart';
 import 'package:kommando/features/routes/routes.dart';
@@ -23,6 +24,8 @@ void main() {
         ),
         Provider(
           create: (context) => ConsumidorStore(),
+        ),Provider(
+          create: (context) => MyItemStore(),
         ),
       ],
       child: MyApp(),
