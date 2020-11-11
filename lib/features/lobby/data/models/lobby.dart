@@ -2,18 +2,18 @@ class Lobby {
   String id;
   String descricao;
   String lobbyStatus;
-  List<String> consumidorList;
+  List<String> consumidores;
 
-  Lobby({this.id, this.descricao, this.lobbyStatus, this.consumidorList});
+  Lobby({this.id, this.descricao, this.lobbyStatus, this.consumidores});
 
   Lobby.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     descricao = json['descricao'];
     lobbyStatus = json['lobbyStatus'];
-    if (json['consumidorList'] != null) {
-      consumidorList = new List<String>();
-      json['consumidorList'].forEach((v) {
-        consumidorList.add(v);
+    if (json['consumidores'] != null) {
+      consumidores = new List<String>();
+      json['consumidores'].forEach((v) {
+        consumidores.add(v);
       });
     }
   }
@@ -23,8 +23,8 @@ class Lobby {
     data['id'] = this.id;
     data['descricao'] = this.descricao;
     data['lobbyStatus'] = this.lobbyStatus;
-    if (this.consumidorList != null) {
-      data['consumidorList'] = this.consumidorList.map((v) => v).toList();
+    if (this.consumidores != null) {
+      data['consumidores'] = this.consumidores.map((v) => v).toList();
     }
     return data;
   }
