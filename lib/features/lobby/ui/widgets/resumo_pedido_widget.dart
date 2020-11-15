@@ -11,6 +11,7 @@ class ResumoPedidoWidget extends StatelessWidget {
     Key key,
   }) : super(key: key);
 
+
   @override
   Widget build(BuildContext context) {
     final MyItemStore _myItemStore = Provider.of<MyItemStore>(context);
@@ -58,10 +59,11 @@ class ResumoPedidoWidget extends StatelessWidget {
           GestureDetector(
             onTap: () {
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MyItemScreen(),
-                  ));
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MyItemScreen(),
+                ),
+              );
             },
             child: Text(
               "Ver itens",
@@ -69,10 +71,14 @@ class ResumoPedidoWidget extends StatelessWidget {
             ),
           ),
           Observer(
-              builder: (context) => Text(
-                    "R\$${MoneyUtils.parseDoubleToMoneyText(_myItemStore.getTotalAcumuladoPedido())}",
-                    style: TextStyle(fontSize: 24, color: Colors.white),
-                  ))
+            builder: (context) {
+              var total = _myItemStore.getTotalAcumuladoPedido();
+              return Text(
+                "R\$${MoneyUtils.parseDoubleToMoneyText(total)}",
+                style: TextStyle(fontSize: 24, color: Colors.white),
+              );
+            },
+          )
         ],
       ),
     );

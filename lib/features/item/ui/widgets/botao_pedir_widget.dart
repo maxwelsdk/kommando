@@ -11,16 +11,18 @@ import 'package:kommando/utils/money_utils.dart';
 import 'package:provider/provider.dart';
 
 class BotaoPedirWidget extends StatelessWidget {
-  final PedidoStore _pedidoStore = PedidoStore();
   final double preco;
+  final GlobalKey<ScaffoldState> scaffoldKey;
 
   BotaoPedirWidget({
     Key key,
     this.preco,
+    this.scaffoldKey,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final PedidoStore _pedidoStore = PedidoStore();
     final _consumidorStore = Provider.of<ConsumidorStore>(context);
     final MyItemStore _myItemStore = Provider.of<MyItemStore>(context);
 
@@ -29,7 +31,7 @@ class BotaoPedirWidget extends StatelessWidget {
         var consumidorState = _consumidorStore.state;
         var itemState = _myItemStore.state;
         if (itemState is ItemCreatedState) {
-          Navigator.of(context).pop();
+          _myItemStore.setState(ItemIdleState());
           return Text("Pedido enviado!");
         }
         if (itemState is ItemPushingState) {
@@ -59,7 +61,9 @@ class BotaoPedirWidget extends StatelessWidget {
                       final pedido = value.pedido;
                       pedido.items.add(_myItemStore.item.id);
                       await _myItemStore.pushItem(
-                          pedidoId: value.pedido.id, item: _myItemStore.item);
+                        pedidoId: value.pedido.id,
+                        item: _myItemStore.item,
+                      );
                     }
                   }
                 });

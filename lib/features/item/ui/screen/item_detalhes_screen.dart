@@ -64,6 +64,7 @@ class _ItemDetalhesScreenState extends State<ItemDetalhesScreen> {
                   scaffoldKey: _scaffoldKey,
                 ),
                 BotaoPedirWidget(
+                  scaffoldKey: _scaffoldKey,
                   preco: widget.produto.preco,
                 )
               ],

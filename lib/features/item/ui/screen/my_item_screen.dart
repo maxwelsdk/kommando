@@ -63,39 +63,41 @@ class _MyItemScreenState extends State<MyItemScreen> {
               return Center(
                 child: CircularProgressIndicator(),
               );
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TituloSecaoWidget(
-                  child: Text("Pedidos pendentes"),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
-                  child: Column(
-                    children: _myItemStore.pedidos
-                        .map((e) => PedidoDesconhecidoWidget(
-                              pedido: e,
-                            ))
-                        .toList(),
+            return SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TituloSecaoWidget(
+                    child: Text("Pedidos pendentes"),
                   ),
-                ),
-                TituloSecaoWidget(
-                  child: Text("Total acumulado"),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
-                  child: Observer(builder: (context) {
-                    return TotalAcumuladoWidget(
-                      total: _myItemStore.getTotalAcumuladoPedido(),
-                    );
-                  }),
-                ),
-                TituloSecaoWidget(
-                  child: Text("Pedidos realizados"),
-                ),
-              ],
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
+                    child: Column(
+                      children: _myItemStore.pedidos
+                          .map((e) => PedidoDesconhecidoWidget(
+                                pedido: e,
+                              ))
+                          .toList(),
+                    ),
+                  ),
+                  TituloSecaoWidget(
+                    child: Text("Total acumulado"),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
+                    child: Observer(builder: (context) {
+                      return TotalAcumuladoWidget(
+                        total: _myItemStore.getTotalAcumuladoPedido(),
+                      );
+                    }),
+                  ),
+                  TituloSecaoWidget(
+                    child: Text("Pedidos realizados"),
+                  ),
+                ],
+              ),
             );
           }),
     );
