@@ -22,10 +22,18 @@ abstract class _MyItemStore with Store {
   Item item = Item();
 
   @observable
-  ObservableList<Item> itens = ObservableList();
-
-  @observable
   ObservableList<ItemDTO> pedidos = ObservableList();
+
+  @action
+  void clearStore() {
+    this.item = Item();
+    this.pedidos.clear();
+  }
+
+  @action
+  addPedido({ItemDTO itemDTO}) {
+    this.pedidos.add(itemDTO);
+  }
 
   @action
   minusQuantidade() {
@@ -51,7 +59,8 @@ abstract class _MyItemStore with Store {
     }
   }
 
-  double getTotalAcumuladoPedido() {
+  @computed
+  double get getTotalAcumuladoPedido {
     double total = 0.0;
     this.pedidos.forEach((element) {
       if (element.checked) {

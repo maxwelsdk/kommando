@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kommando/core/item/models/item.dart';
+import 'package:kommando/features/item/data/models/item_dto.dart';
 import 'package:kommando/features/item/ui/stores/my_item_store.dart';
+import 'package:kommando/features/produto/ui/stores/produto_store.dart';
 import 'package:provider/provider.dart';
 
 class AdicionarMaisItensWidget extends StatelessWidget {
@@ -16,12 +17,15 @@ class AdicionarMaisItensWidget extends StatelessWidget {
     final MyItemStore _myItemStore = Provider.of<MyItemStore>(context);
 
     return FlatButton(
-      onPressed: () {
-        _myItemStore.itens.add(
-          Item(
-            produtoId: _myItemStore.item.produtoId,
+      onPressed: () async {
+        final produto = await ProdutoStore().getProduto(id: _myItemStore.item.produtoId);
+        _myItemStore.addPedido(
+          itemDTO: ItemDTO(
+            checked: true,
+            preco: produto.preco,
             quantidade: _myItemStore.item.quantidade,
-          ),
+            titulo: produto.titulo,
+          )
         );
         scaffoldKey.currentState.showSnackBar(
           SnackBar(

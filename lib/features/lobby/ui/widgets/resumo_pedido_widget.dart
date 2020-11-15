@@ -11,7 +11,6 @@ class ResumoPedidoWidget extends StatelessWidget {
     Key key,
   }) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
     final MyItemStore _myItemStore = Provider.of<MyItemStore>(context);
@@ -39,7 +38,7 @@ class ResumoPedidoWidget extends StatelessWidget {
                   child: Center(
                     child: Observer(
                       builder: (context) => Text(
-                        "${_myItemStore.itens.length ?? 0}",
+                        "${_myItemStore.pedidos.length ?? 0}",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 10,
@@ -72,10 +71,12 @@ class ResumoPedidoWidget extends StatelessWidget {
           ),
           Observer(
             builder: (context) {
-              var total = _myItemStore.getTotalAcumuladoPedido();
               return Text(
-                "R\$${MoneyUtils.parseDoubleToMoneyText(total)}",
-                style: TextStyle(fontSize: 24, color: Colors.white),
+                "R\$${MoneyUtils.parseDoubleToMoneyText(_myItemStore.getTotalAcumuladoPedido)}",
+                style: TextStyle(
+                  fontSize: 24,
+                  color: Colors.white,
+                ),
               );
             },
           )

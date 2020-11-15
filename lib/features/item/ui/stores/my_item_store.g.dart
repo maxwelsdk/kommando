@@ -9,6 +9,14 @@ part of 'my_item_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$MyItemStore on _MyItemStore, Store {
+  Computed<double> _$getTotalAcumuladoPedidoComputed;
+
+  @override
+  double get getTotalAcumuladoPedido => (_$getTotalAcumuladoPedidoComputed ??=
+          Computed<double>(() => super.getTotalAcumuladoPedido,
+              name: '_MyItemStore.getTotalAcumuladoPedido'))
+      .value;
+
   final _$stateAtom = Atom(name: '_MyItemStore.state');
 
   @override
@@ -36,21 +44,6 @@ mixin _$MyItemStore on _MyItemStore, Store {
   set item(Item value) {
     _$itemAtom.reportWrite(value, super.item, () {
       super.item = value;
-    });
-  }
-
-  final _$itensAtom = Atom(name: '_MyItemStore.itens');
-
-  @override
-  ObservableList<Item> get itens {
-    _$itensAtom.reportRead();
-    return super.itens;
-  }
-
-  @override
-  set itens(ObservableList<Item> value) {
-    _$itensAtom.reportWrite(value, super.itens, () {
-      super.itens = value;
     });
   }
 
@@ -83,6 +76,28 @@ mixin _$MyItemStore on _MyItemStore, Store {
   }
 
   @override
+  void clearStore() {
+    final _$actionInfo = _$_MyItemStoreActionController.startAction(
+        name: '_MyItemStore.clearStore');
+    try {
+      return super.clearStore();
+    } finally {
+      _$_MyItemStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic addPedido({ItemDTO itemDTO}) {
+    final _$actionInfo = _$_MyItemStoreActionController.startAction(
+        name: '_MyItemStore.addPedido');
+    try {
+      return super.addPedido(itemDTO: itemDTO);
+    } finally {
+      _$_MyItemStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic minusQuantidade() {
     final _$actionInfo = _$_MyItemStoreActionController.startAction(
         name: '_MyItemStore.minusQuantidade');
@@ -109,8 +124,8 @@ mixin _$MyItemStore on _MyItemStore, Store {
     return '''
 state: ${state},
 item: ${item},
-itens: ${itens},
-pedidos: ${pedidos}
+pedidos: ${pedidos},
+getTotalAcumuladoPedido: ${getTotalAcumuladoPedido}
     ''';
   }
 }

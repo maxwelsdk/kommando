@@ -3,11 +3,13 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kommando/features/categoria/ui/states/categoria_states.dart';
 import 'package:kommando/features/categoria/ui/stores/categoria_store.dart';
 import 'package:kommando/features/item/ui/screen/item_detalhes_screen.dart';
+import 'package:kommando/features/item/ui/stores/my_item_store.dart';
 import 'package:kommando/features/lobby/ui/screen/lobby_detalhes_screen.dart';
 import 'package:kommando/features/lobby/ui/widgets/produto_widget.dart';
 import 'package:kommando/features/lobby/ui/widgets/resumo_pedido_widget.dart';
 import 'package:kommando/features/lobby/ui/widgets/top_option_categoria_widget.dart';
 import 'package:kommando/features/produto/ui/stores/produto_store.dart';
+import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class LobbyScreen extends StatefulWidget {
@@ -29,6 +31,7 @@ class _LobbyScreenState extends State<LobbyScreen> {
   @override
   void initState() {
     Future.delayed(Duration.zero, () async {
+      Provider.of<MyItemStore>(context, listen: false).clearStore();
       await _categoriaStore.getCategorias();
     });
     super.initState();
