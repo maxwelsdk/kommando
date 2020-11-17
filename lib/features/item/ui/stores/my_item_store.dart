@@ -12,6 +12,15 @@ class MyItemStore = _MyItemStore with _$MyItemStore;
 abstract class _MyItemStore with Store {
   final ItemServices _itemServices = ItemServices();
 
+  _MyItemStore() {
+    autorun((_) {
+      print("auto roudou-se");
+      if (state is ItemIdleState) {
+        this.clearStore();
+      }
+    });
+  }
+
   @observable
   ItemState state = ItemIdleState();
 
@@ -47,6 +56,18 @@ abstract class _MyItemStore with Store {
     item.quantidade++;
   }
 
+  Future<void> pushItens({String pedidoId, List<Item> itens}) async {
+    setState(ItemPushingState());
+    final _itensResponse =
+        await _itemServices.pushItens(pedidoId: pedidoId, itens: itens);
+    if (_itensResponse is List<Item>) {
+      setState(ItemCreatedState());
+    }
+    if (_itensResponse is Message) {
+      setState(ItemErrorState());
+    }
+  }
+
   Future<void> pushItem({String pedidoId, Item item}) async {
     setState(ItemPushingState());
     final _itemResponse =
@@ -55,7 +76,7 @@ abstract class _MyItemStore with Store {
       setState(ItemErrorState());
     }
     if (_itemResponse is Item) {
-      setState(ItemCreatedState(_itemResponse));
+      setState(ItemCreatedState());
     }
   }
 

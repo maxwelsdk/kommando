@@ -5,7 +5,5 @@ class ItemIdleState implements ItemState {}
 class ItemPushingState implements ItemState {}
 class ItemErrorState implements ItemState {}
 class ItemCreatedState implements ItemState {
-  final Item item;
-
-  ItemCreatedState(this.item);
+  ItemCreatedState();
 }

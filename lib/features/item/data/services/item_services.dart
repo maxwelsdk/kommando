@@ -70,11 +70,15 @@ class ItemServices implements IItem {
   Future pushItens({String pedidoId, List<Item> itens}) async {
     try {
       final Response _response =
-          await _apiServices.post(uri: "/itens/$pedidoId", body: itens);
+          await _apiServices.post(uri: "/itens/$pedidoId/batch", body: itens);
       switch (_response.statusCode) {
         case HttpStatus.created:
-          return Item.fromJson(
-              jsonDecode(utf8.decode(_response.bodyBytes))['item']);
+          List<Item> itens = List();
+          final json = jsonDecode(utf8.decode(_response.bodyBytes))['itens'];
+          for (var item in json) {
+            itens.add(Item.fromJson(item));
+          }
+          return itens;
           break;
         default:
           return Message(jsonDecode(utf8.decode(_response.bodyBytes))['message']);

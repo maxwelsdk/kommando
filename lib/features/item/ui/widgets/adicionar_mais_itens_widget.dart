@@ -15,13 +15,15 @@ class AdicionarMaisItensWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final MyItemStore _myItemStore = Provider.of<MyItemStore>(context);
+    final ProdutoStore _produtoStore = ProdutoStore();
 
     return FlatButton(
       onPressed: () async {
-        final produto = await ProdutoStore().getProduto(id: _myItemStore.item.produtoId);
+        final produto = await _produtoStore.getProduto(id: _myItemStore.item.produtoId);
         _myItemStore.addPedido(
           itemDTO: ItemDTO(
             checked: true,
+            produtoId: produto.id,
             preco: produto.preco,
             quantidade: _myItemStore.item.quantidade,
             titulo: produto.titulo,

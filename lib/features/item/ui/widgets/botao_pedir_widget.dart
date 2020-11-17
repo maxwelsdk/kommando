@@ -58,8 +58,6 @@ class BotaoPedirWidget extends StatelessWidget {
                     .then((value) async {
                   if (value is PedidoSucessState) {
                     if (value.pedido.id != null || value.pedido.id.isNotEmpty) {
-                      final pedido = value.pedido;
-                      pedido.items.add(_myItemStore.item.id);
                       await _myItemStore.pushItem(
                         pedidoId: value.pedido.id,
                         item: _myItemStore.item,
