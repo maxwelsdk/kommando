@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kommando/features/item/data/models/item_dto.dart';
 import 'package:kommando/features/lobby/ui/widgets/conectados_list_view_widget.dart';
 import 'package:kommando/features/lobby/ui/widgets/pedido_desconhecido_widget.dart';
 import 'package:kommando/features/lobby/ui/widgets/titulo_secao_widget.dart';
@@ -57,7 +58,14 @@ class LobbyDetalhesScreen extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 14.0),
-            child: PedidoDesconhecidoWidget(),
+            child: PedidoDesconhecidoWidget(
+              itemDTO: ItemDTO(
+                quantidade: 1,
+                checked: false,
+                titulo: "teste",
+                preco: 0,
+              ),
+            ),
           )
         ],
       ),

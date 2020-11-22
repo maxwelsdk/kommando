@@ -16,7 +16,7 @@ class TotalAcumuladoWidget extends StatelessWidget {
       color: Theme.of(context).primaryColor,
       child: Center(
         child: Text(
-          "R\$${MoneyUtils.parseDoubleToMoneyText(total)}",
+          "R\$${MoneyUtils.parseDoubleToMoneyText(total ?? 0)}",
           style: TextStyle(
             color: Colors.white,
             fontSize: 32,

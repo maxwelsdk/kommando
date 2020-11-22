@@ -3,11 +3,11 @@ import 'package:kommando/features/item/data/models/item_dto.dart';
 import 'package:kommando/utils/money_utils.dart';
 
 class PedidoDesconhecidoWidget extends StatefulWidget {
-  final ItemDTO pedido;
+  final ItemDTO itemDTO;
 
   const PedidoDesconhecidoWidget({
     Key key,
-    this.pedido,
+    this.itemDTO,
   }) : super(key: key);
 
   @override
@@ -34,11 +34,11 @@ class _PedidoDesconhecidoWidgetState extends State<PedidoDesconhecidoWidget> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Checkbox(
-              value: widget.pedido.checked,
+              value: widget.itemDTO.checked,
               activeColor: Theme.of(context).primaryColor,
               onChanged: (value) {
                 setState(() {
-                  widget.pedido.checked = value;
+                  widget.itemDTO.checked = value;
                 });
               },
             ),
@@ -47,7 +47,7 @@ class _PedidoDesconhecidoWidgetState extends State<PedidoDesconhecidoWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "${widget.pedido.quantidade}x ${widget.pedido.titulo}",
+                    "${widget.itemDTO.quantidade}x ${widget.itemDTO.titulo}",
                   )
                 ],
               ),
@@ -55,7 +55,7 @@ class _PedidoDesconhecidoWidgetState extends State<PedidoDesconhecidoWidget> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Text(
-                "R\$${MoneyUtils.parseDoubleToMoneyText(widget.pedido.preco * widget.pedido.quantidade)}",
+                "R\$${MoneyUtils.parseDoubleToMoneyText(widget.itemDTO.preco ?? 0 * widget.itemDTO.quantidade ?? 0)}",
                 style: TextStyle(fontSize: 24),
               ),
             )

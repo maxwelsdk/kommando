@@ -24,6 +24,23 @@ mixin _$PedidoStore on _PedidoStore, Store {
     });
   }
 
+  final _$pedidoRealizadoStateAtom =
+      Atom(name: '_PedidoStore.pedidoRealizadoState');
+
+  @override
+  ItensPedidosState get pedidoRealizadoState {
+    _$pedidoRealizadoStateAtom.reportRead();
+    return super.pedidoRealizadoState;
+  }
+
+  @override
+  set pedidoRealizadoState(ItensPedidosState value) {
+    _$pedidoRealizadoStateAtom.reportWrite(value, super.pedidoRealizadoState,
+        () {
+      super.pedidoRealizadoState = value;
+    });
+  }
+
   final _$_PedidoStoreActionController = ActionController(name: '_PedidoStore');
 
   @override
@@ -38,9 +55,21 @@ mixin _$PedidoStore on _PedidoStore, Store {
   }
 
   @override
+  ItensPedidosState setPedidoRealizadoState(ItensPedidosState value) {
+    final _$actionInfo = _$_PedidoStoreActionController.startAction(
+        name: '_PedidoStore.setPedidoRealizadoState');
+    try {
+      return super.setPedidoRealizadoState(value);
+    } finally {
+      _$_PedidoStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
-state: ${state}
+state: ${state},
+pedidoRealizadoState: ${pedidoRealizadoState}
     ''';
   }
 }

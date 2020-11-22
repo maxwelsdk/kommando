@@ -1,6 +1,8 @@
 import 'package:kommando/core/api/message.dart';
+import 'package:kommando/core/item/models/item.dart';
 import 'package:kommando/core/pedido/models/pedido.dart';
 import 'package:kommando/features/pedido/data/services/pedido_services.dart';
+import 'package:kommando/features/pedido/ui/states/pedido_realizados_state.dart';
 import 'package:kommando/features/pedido/ui/states/pedido_states.dart';
 import 'package:mobx/mobx.dart';
 
@@ -17,6 +19,13 @@ abstract class _PedidoStore with Store {
   @action
   PedidoState setState(PedidoState value) => this.state = value;
 
+  @observable
+  ItensPedidosState pedidoRealizadoState = ItensPedidosIdleState();
+
+  @action
+  ItensPedidosState setPedidoRealizadoState(ItensPedidosState value) =>
+      this.pedidoRealizadoState = value;
+
   Future<PedidoState> pushPedido({Pedido pedido}) async {
     setState(PedidoPushingState());
     final _responsePedido = await _pedidoServices.pushPedido(pedido: pedido);
@@ -27,5 +36,20 @@ abstract class _PedidoStore with Store {
       setState(PedidoSucessState(_responsePedido));
     }
     return state;
+  }
+
+  Future<void> getPedidosByLobbyAndConsumidor(
+      {String lobbyId, String consumidorId}) async {
+    setPedidoRealizadoState(ItensPedidosLoadingState());
+    final _responsePedidos =
+        await _pedidoServices.fetchPedidosByLobbyAndConsumidor(
+            lobbyId: lobbyId, consumidorId: consumidorId);
+
+    if (_responsePedidos is Message) {
+      setPedidoRealizadoState(ItensPedidosErrorState(_responsePedidos.message));
+    }
+    if (_responsePedidos is List<Item>) {
+      setPedidoRealizadoState(ItensPedidosFoundState(_responsePedidos));
+    }
   }
 }

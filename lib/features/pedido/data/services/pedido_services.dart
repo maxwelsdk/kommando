@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:http/http.dart';
 import 'package:kommando/core/api/api_services.dart';
 import 'package:kommando/core/api/message.dart';
+import 'package:kommando/core/item/models/item.dart';
 
 import 'package:kommando/core/pedido/models/pedido.dart';
 import 'package:kommando/features/pedido/data/i_pedido.dart';
@@ -79,6 +80,29 @@ class PedidoServices implements IPedido {
       default:
         return Message(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
         break;
+    }
+  }
+
+  @override
+  Future fetchPedidosByLobbyAndConsumidor({String lobbyId, String consumidorId}) async {
+    try {
+      final Response _response =
+          await _apiServices.get(uri: "/pedidos/$lobbyId/$consumidorId",);
+      switch (_response.statusCode) {
+        case HttpStatus.ok:
+          final itens = List<Item>();
+          final json = jsonDecode(utf8.decode(_response.bodyBytes))['itens'];
+          for (Object j in json) {
+            itens.add(Item.fromJson(j));
+          }
+          return itens;
+        default:
+          return Message(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
+          break;
+      }
+    } catch (e, s) {
+      print(s);
+      return Message(e);
     }
   }
 }

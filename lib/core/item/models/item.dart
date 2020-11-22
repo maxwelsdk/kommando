@@ -13,6 +13,7 @@ abstract class _Item with Store {
 
   _Item({this.id, this.produtoId, this.quantidade = 1, this.pedidoId});
 
+  // ignore: unused_element
   _Item.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     produtoId = json['produtoId'];
