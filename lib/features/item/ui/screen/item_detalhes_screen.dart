@@ -25,6 +25,7 @@ class _ItemDetalhesScreenState extends State<ItemDetalhesScreen> {
       final MyItemStore _myItemStore =
           Provider.of<MyItemStore>(context, listen: false);
       _myItemStore.item.produtoId = widget.produto.id;
+      _myItemStore.item.quantidade = 1;
     });
     super.initState();
   }
