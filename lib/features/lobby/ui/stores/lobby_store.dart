@@ -26,4 +26,5 @@ abstract class _LobbyStore with Store {
       setState(LobbyNotFoundState(foundLobby.message));
     }
   }
+
 }

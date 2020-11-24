@@ -17,10 +17,9 @@ abstract class _ConsumidorStore with Store {
   @action
   ConsumidorState setState(ConsumidorState value) => this.state = value;
 
-
   Future<ConsumidorState> pushConsumidor({Consumidor consumidor}) async {
-    final _responseConsumidor = await _consumidorServices.pushConsumidor(
-        consumidor: consumidor);
+    final _responseConsumidor =
+        await _consumidorServices.pushConsumidor(consumidor: consumidor);
     if (_responseConsumidor is Message) {
       setState(ConsumidorErrorState(_responseConsumidor.message));
     }
@@ -32,7 +31,8 @@ abstract class _ConsumidorStore with Store {
 
   Future<void> getConsumidores({String lobbyId}) async {
     setState(ConsumidorLoadingState());
-    final _response = await _consumidorServices.fetchConsumidores(lobbyId: lobbyId);
+    final _response =
+        await _consumidorServices.fetchConsumidores(lobbyId: lobbyId);
     if (_response is Message) {
       setState(ConsumidorErrorState(_response.message));
     }
@@ -40,6 +40,5 @@ abstract class _ConsumidorStore with Store {
     if (_response is List<Consumidor>) {
       setState(ConsumidorFoundState(_response));
     }
-
   }
 }

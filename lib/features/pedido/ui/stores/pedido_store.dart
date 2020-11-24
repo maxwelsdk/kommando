@@ -52,4 +52,17 @@ abstract class _PedidoStore with Store {
       setPedidoRealizadoState(ItensPedidosFoundState(_responsePedidos));
     }
   }
+
+  Future<void> getPedidosDesconhecidosByLobby({String lobbyId}) async {
+    setPedidoRealizadoState(ItensPedidosLoadingState());
+    final _responsePedidos = await _pedidoServices
+        .fetchPedidosDesconhecidosByLobby(lobbyId: lobbyId);
+
+    if (_responsePedidos is Message) {
+      setPedidoRealizadoState(ItensPedidosErrorState(_responsePedidos.message));
+    }
+    if (_responsePedidos is List<Item>) {
+      setPedidoRealizadoState(ItensPedidosFoundState(_responsePedidos));
+    }
+  }
 }

@@ -8,13 +8,13 @@ import 'package:kommando/core/item/models/item.dart';
 import 'package:kommando/core/pedido/models/pedido.dart';
 import 'package:kommando/features/pedido/data/i_pedido.dart';
 
-
 class PedidoServices implements IPedido {
   final ApiServices _apiServices = ApiServices();
 
   @override
   Future deletePedido({String id}) async {
-    final Response _response = await _apiServices.delete(uri: "/pedidos", id: id);
+    final Response _response =
+        await _apiServices.delete(uri: "/pedidos", id: id);
     switch (_response.statusCode) {
       case HttpStatus.ok:
         return Message(jsonDecode(utf8.decode(_response.bodyBytes))['id']);
@@ -29,7 +29,8 @@ class PedidoServices implements IPedido {
     final Response _response = await _apiServices.get(uri: "/pedidos/$id");
     switch (_response.statusCode) {
       case HttpStatus.ok:
-        return Pedido.fromJson(jsonDecode(utf8.decode(_response.bodyBytes))['pedido']);
+        return Pedido.fromJson(
+            jsonDecode(utf8.decode(_response.bodyBytes))['pedido']);
         break;
       default:
         return Message(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
@@ -84,10 +85,12 @@ class PedidoServices implements IPedido {
   }
 
   @override
-  Future fetchPedidosByLobbyAndConsumidor({String lobbyId, String consumidorId}) async {
+  Future fetchPedidosByLobbyAndConsumidor(
+      {String lobbyId, String consumidorId}) async {
     try {
-      final Response _response =
-          await _apiServices.get(uri: "/pedidos/$lobbyId/$consumidorId",);
+      final Response _response = await _apiServices.get(
+        uri: "/pedidos/$lobbyId/$consumidorId",
+      );
       switch (_response.statusCode) {
         case HttpStatus.ok:
           final itens = List<Item>();
@@ -97,7 +100,33 @@ class PedidoServices implements IPedido {
           }
           return itens;
         default:
-          return Message(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
+          return Message(
+              jsonDecode(utf8.decode(_response.bodyBytes))['message']);
+          break;
+      }
+    } catch (e, s) {
+      print(s);
+      return Message(e);
+    }
+  }
+
+  @override
+  Future fetchPedidosDesconhecidosByLobby({String lobbyId}) async {
+    try {
+      final Response _response = await _apiServices.get(
+        uri: "/pedidos/desconhecidos/$lobbyId",
+      );
+      switch (_response.statusCode) {
+        case HttpStatus.ok:
+          final itens = List<Item>();
+          final json = jsonDecode(utf8.decode(_response.bodyBytes))['itens'];
+          for (Object j in json) {
+            itens.add(Item.fromJson(j));
+          }
+          return itens;
+        default:
+          return Message(
+              jsonDecode(utf8.decode(_response.bodyBytes))['message']);
           break;
       }
     } catch (e, s) {

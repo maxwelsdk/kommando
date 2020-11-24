@@ -11,7 +11,8 @@ class ConsumidorServices implements IConsumidor {
 
   @override
   Future fetchConsumidores({String lobbyId}) async {
-    final _response = await _services.get(uri: "/consumidores/$lobbyId");
+    final _response =
+        await _services.get(uri: "/lobbies/$lobbyId/consumidores");
     switch (_response.statusCode) {
       case HttpStatus.ok:
         final json =
@@ -45,12 +46,24 @@ class ConsumidorServices implements IConsumidor {
 
   @override
   Future deleteConsumidor({String id}) async {
-    final _response =
-        await _services.delete(uri: "/consumidores", id: id);
+    final _response = await _services.delete(uri: "/consumidores", id: id);
     switch (_response.statusCode) {
       case HttpStatus.ok:
-        return Message(
-            jsonDecode(utf8.decode(_response.bodyBytes))["id"]);
+        return Message(jsonDecode(utf8.decode(_response.bodyBytes))["id"]);
+        break;
+      default:
+        return Message(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
+        break;
+    }
+  }
+
+  @override
+  Future fetchConsumidor({String consumidorId}) async {
+    final _response = await _services.post(uri: "/consumidores/$consumidorId");
+    switch (_response.statusCode) {
+      case HttpStatus.ok:
+        return Consumidor.fromJson(
+            jsonDecode(utf8.decode(_response.bodyBytes))["consumidor"]);
         break;
       default:
         return Message(jsonDecode(utf8.decode(_response.bodyBytes))['message']);
