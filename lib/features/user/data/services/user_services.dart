@@ -11,8 +11,8 @@ class UserServices implements IUser {
   final ApiServices _services = ApiServices();
 
   @override
-  Future fetchUser({String id}) async {
-    final Response _response = await _services.get(uri: "/users/$id");
+  Future fetchUser({String uid}) async {
+    final Response _response = await _services.get(uri: "/users/$uid");
     switch (_response.statusCode) {
       case HttpStatus.ok:
         return AppUser.fromJson(

@@ -29,4 +29,17 @@ abstract class _ConsumidorStore with Store {
     }
     return state;
   }
+
+  Future<void> getConsumidores({String lobbyId}) async {
+    setState(ConsumidorLoadingState());
+    final _response = await _consumidorServices.fetchConsumidores(lobbyId: lobbyId);
+    if (_response is Message) {
+      setState(ConsumidorErrorState(_response.message));
+    }
+
+    if (_response is List<Consumidor>) {
+      setState(ConsumidorFoundState(_response));
+    }
+
+  }
 }

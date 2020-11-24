@@ -26,7 +26,7 @@ void main() {
 
       if (value is AppUser) {
         uidTest = matcher.uid;
-        AppUser user = await userServices.fetchUser(id: uidTest);
+        AppUser user = await userServices.fetchUser(uid: uidTest);
         expect(user.uid, matcher.uid);
         await userServices.deleteUserById(id: user.id);
       }
