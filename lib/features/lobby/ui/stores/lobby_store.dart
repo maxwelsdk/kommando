@@ -27,4 +27,9 @@ abstract class _LobbyStore with Store {
     }
   }
 
+  Future<double> getTotalAcumulado({String lobbyId}) async {
+    final response = await _lobbyServices.fetchTotalByLobby(lobbyId: lobbyId);
+    if (response is double) return response;
+    return 0;
+  }
 }

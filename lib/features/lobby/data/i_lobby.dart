@@ -6,4 +6,5 @@ abstract class ILobby {
   Future deleteLobby({String id});
   Future updateLobby({Lobby lobby});
   Future pushLobby({Lobby lobby});
+  Future fetchTotalByLobby({String lobbyId});
 }

@@ -86,4 +86,22 @@ class LobbyServices implements ILobby {
         break;
     }
   }
+
+  @override
+  Future fetchTotalByLobby({String lobbyId}) async {
+    try {
+      final _response = await _services.get(uri: "/lobbies/$lobbyId/total");
+      switch (_response.statusCode) {
+        case HttpStatus.ok:
+          return jsonDecode(utf8.decode(_response.bodyBytes))["total"];
+          break;
+        default:
+          return Message(
+              jsonDecode(utf8.decode(_response.bodyBytes))['message']);
+          break;
+      }
+    } catch (e) {
+      return Message(e.toString());
+    }
+  }
 }
