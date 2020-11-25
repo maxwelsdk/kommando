@@ -5,6 +5,7 @@ class AppUser {
   String displayName;
   String cpf;
   String telefone;
+  String role;
 
   AppUser(
       {this.id,
@@ -21,6 +22,7 @@ class AppUser {
     displayName = json['displayName'];
     cpf = json['cpf'];
     telefone = json['telefone'];
+    role = json['role'];
   }
 
   Map<String, dynamic> toJson() {
@@ -31,6 +33,7 @@ class AppUser {
     data['displayName'] = this.displayName;
     data['cpf'] = this.cpf;
     data['telefone'] = this.telefone;
+    data['role'] = this.role;
     return data;
   }
 }
