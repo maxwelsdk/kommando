@@ -55,8 +55,8 @@ class ResumoPedidoWidget extends StatelessWidget {
               )
             ],
           ),
-          GestureDetector(
-            onTap: () {
+          FlatButton(
+            onPressed: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -66,7 +66,11 @@ class ResumoPedidoWidget extends StatelessWidget {
             },
             child: Text(
               "Ver itens",
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.normal,
+              ),
             ),
           ),
           Observer(
@@ -74,7 +78,7 @@ class ResumoPedidoWidget extends StatelessWidget {
               return Text(
                 "R\$${MoneyUtils.parseDoubleToMoneyText(_myItemStore.getTotalAcumuladoPedido)}",
                 style: TextStyle(
-                  fontSize: 24,
+                  fontSize: 16,
                   color: Colors.white,
                 ),
               );
