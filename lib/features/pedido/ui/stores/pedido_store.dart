@@ -38,6 +38,30 @@ abstract class _PedidoStore with Store {
     return state;
   }
 
+  Future<PedidoState> getPedido({String id}) async {
+    setState(PedidoPushingState());
+    final _responsePedido = await _pedidoServices.fetchPedido(id: id);
+    if (_responsePedido is Message) {
+      setState(PedidoErrorState(_responsePedido.message));
+    }
+    if (_responsePedido is Pedido) {
+      setState(PedidoSucessState(_responsePedido));
+    }
+    return state;
+  }
+
+  Future<PedidoState> updatePedido({Pedido pedido}) async {
+    setState(PedidoPushingState());
+    final _responsePedido = await _pedidoServices.updatePedido(pedido: pedido);
+    if (_responsePedido is Message) {
+      setState(PedidoErrorState(_responsePedido.message));
+    }
+    if (_responsePedido is Pedido) {
+      setState(PedidoSucessState(_responsePedido));
+    }
+    return state;
+  }
+
   Future<void> getPedidosByLobbyAndConsumidor(
       {String lobbyId, String consumidorId}) async {
     setPedidoRealizadoState(ItensPedidosLoadingState());

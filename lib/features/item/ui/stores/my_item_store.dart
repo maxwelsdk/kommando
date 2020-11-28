@@ -33,10 +33,23 @@ abstract class _MyItemStore with Store {
   @observable
   ObservableList<ItemDTO> pedidos = ObservableList();
 
+  @observable
+  ObservableList<ItemDTO> pedidosDesconhecidos = ObservableList();
+
+  @computed
+  bool get checkedPedidos {
+    int i = 0;
+    pedidosDesconhecidos.forEach((element) {
+      if (element.checked) i++;
+    });
+    return i > 0;
+  }
+
   @action
   void clearStore() {
     this.item = Item();
     this.pedidos.clear();
+    this.pedidosDesconhecidos.clear();
   }
 
   @action

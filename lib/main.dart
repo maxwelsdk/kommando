@@ -24,7 +24,8 @@ void main() {
         ),
         Provider(
           create: (context) => ConsumidorStore(),
-        ),Provider(
+        ),
+        Provider(
           create: (context) => MyItemStore(),
         ),
       ],

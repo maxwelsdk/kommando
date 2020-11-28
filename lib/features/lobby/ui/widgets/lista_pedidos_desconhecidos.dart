@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_mobx_helpers/flutter_mobx_helpers.dart';
 import 'package:kommando/core/produto/models/produto.dart';
 import 'package:kommando/features/item/data/models/item_dto.dart';
+import 'package:kommando/features/item/ui/stores/my_item_store.dart';
 import 'package:kommando/features/lobby/ui/states/lobby_states.dart';
 import 'package:kommando/features/lobby/ui/stores/lobby_store.dart';
 import 'package:kommando/features/lobby/ui/widgets/pedido_desconhecido_widget.dart';
@@ -19,6 +20,7 @@ class ListPedidosDesconhecidosWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _providerLobbyStore = Provider.of<LobbyStore>(context);
+    final _myItemStore = Provider.of<MyItemStore>(context);
     final _pedidoStore = PedidoStore();
     final _produtoStore = ProdutoStore();
 
@@ -42,15 +44,17 @@ class ListPedidosDesconhecidosWidget extends StatelessWidget {
             return FutureBuilder(
               future: Future.delayed(Duration.zero, () async {
                 final List<Widget> widgets = List();
-                final List<ItemDTO> itensDTO = List();
+                _myItemStore.pedidosDesconhecidos.clear();
                 for (var item in state.itens) {
                   await _produtoStore
                       .getProduto(id: item.produtoId)
                       .then((value) {
                     if (value is Produto) {
-                      itensDTO.add(
+                      _myItemStore.pedidosDesconhecidos.add(
                         ItemDTO(
+                          id: item.id,
                           produtoId: item.produtoId,
+                          pedidoId: item.pedidoId,
                           titulo: value.titulo,
                           checked: false,
                           quantidade: item.quantidade,
@@ -60,7 +64,7 @@ class ListPedidosDesconhecidosWidget extends StatelessWidget {
                     }
                   });
                 }
-                itensDTO.forEach((element) {
+                _myItemStore.pedidosDesconhecidos.forEach((element) {
                   widgets.add(PedidoDesconhecidoWidget(
                     itemDTO: element,
                   ));
@@ -68,8 +72,18 @@ class ListPedidosDesconhecidosWidget extends StatelessWidget {
                 return widgets;
               }),
               builder: (context, snapshot) => snapshot.hasData
-                  ? Column(
-                      children: snapshot.data,
+                  ? Container(
+                      height: 400,
+                      child: ListView.builder(
+                        itemCount: snapshot.data.length + 1,
+                        itemBuilder: (context, index) {
+                          if (index == snapshot.data.length)
+                            return SizedBox(
+                              height: 100,
+                            );
+                          return snapshot.data[index];
+                        },
+                      ),
                     )
                   : Container(),
             );

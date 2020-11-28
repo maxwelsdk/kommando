@@ -9,6 +9,13 @@ part of 'my_item_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$MyItemStore on _MyItemStore, Store {
+  Computed<bool> _$checkedPedidosComputed;
+
+  @override
+  bool get checkedPedidos =>
+      (_$checkedPedidosComputed ??= Computed<bool>(() => super.checkedPedidos,
+              name: '_MyItemStore.checkedPedidos'))
+          .value;
   Computed<double> _$getTotalAcumuladoPedidoComputed;
 
   @override
@@ -59,6 +66,23 @@ mixin _$MyItemStore on _MyItemStore, Store {
   set pedidos(ObservableList<ItemDTO> value) {
     _$pedidosAtom.reportWrite(value, super.pedidos, () {
       super.pedidos = value;
+    });
+  }
+
+  final _$pedidosDesconhecidosAtom =
+      Atom(name: '_MyItemStore.pedidosDesconhecidos');
+
+  @override
+  ObservableList<ItemDTO> get pedidosDesconhecidos {
+    _$pedidosDesconhecidosAtom.reportRead();
+    return super.pedidosDesconhecidos;
+  }
+
+  @override
+  set pedidosDesconhecidos(ObservableList<ItemDTO> value) {
+    _$pedidosDesconhecidosAtom.reportWrite(value, super.pedidosDesconhecidos,
+        () {
+      super.pedidosDesconhecidos = value;
     });
   }
 
@@ -125,6 +149,8 @@ mixin _$MyItemStore on _MyItemStore, Store {
 state: ${state},
 item: ${item},
 pedidos: ${pedidos},
+pedidosDesconhecidos: ${pedidosDesconhecidos},
+checkedPedidos: ${checkedPedidos},
 getTotalAcumuladoPedido: ${getTotalAcumuladoPedido}
     ''';
   }

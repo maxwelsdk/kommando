@@ -9,8 +9,8 @@ import 'package:kommando/features/user/ui/states/user_states.dart';
 import 'package:kommando/features/user/ui/stores/user_store.dart';
 import 'package:provider/provider.dart';
 
-class ConectadosListViewWidget extends StatelessWidget {
-  const ConectadosListViewWidget({
+class ConectadosHorizontalListViewWidget extends StatelessWidget {
+  const ConectadosHorizontalListViewWidget({
     Key key,
   }) : super(key: key);
 
