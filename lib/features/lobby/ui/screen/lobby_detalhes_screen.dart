@@ -78,7 +78,6 @@ class LobbyDetalhesScreen extends StatelessWidget {
                     id: response.pedido.id,
                     items: response.pedido.items,
                   );
-                  novoPedido.items.add(item.id);
                   _pedidoStore
                       .updatePedido(pedido: novoPedido)
                       .then((value) => print("foi atualizado"));

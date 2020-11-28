@@ -63,6 +63,8 @@ class ConectadosVerticalListViewWidget extends StatelessWidget {
                           return Center(child: CircularProgressIndicator());
                         }
                         if (state is UserFoundState) {
+                          if (state.user.role == "FUNCIONARIO")
+                            return Container();
                           return Card(
                             child: InkWell(
                               onTap: () {
@@ -79,7 +81,6 @@ class ConectadosVerticalListViewWidget extends StatelessWidget {
                                           id: response.pedido.id,
                                           items: response.pedido.items,
                                         );
-                                        novoPedido.items.add(item.id);
                                         _pedidoStore
                                             .updatePedido(pedido: novoPedido)
                                             .then((value) =>
@@ -91,7 +92,10 @@ class ConectadosVerticalListViewWidget extends StatelessWidget {
                               },
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Text(state.user.nome),
+                                child: Text(
+                                  state.user.nome,
+                                  style: TextStyle(fontSize: 24),
+                                ),
                               ),
                             ),
                           );
