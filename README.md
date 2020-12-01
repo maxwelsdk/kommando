@@ -15,7 +15,12 @@ For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
+About Kommando:
+
+[Figma Preview](https://www.figma.com/file/eLdWRRwOknvj9YC7qe2p6P/Projeto-Kommando-2-2020?node-id=0%3A1)
+
 
 
 Icons used in this project:
-noun_code_1371523 - Created by Aham Brahma from the Noun Project
+Feather Icons;
+noun_code_1371523 - Created by Aham Brahma from the Noun Project;
